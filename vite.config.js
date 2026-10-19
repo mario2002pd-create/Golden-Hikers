@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { defineConfig } from 'vite';
 import { SITIO } from './scripts/lib/sitio.mjs';
 import { esc } from './scripts/lib/formato.mjs';
-import { cifrasPortada } from './scripts/lib/html.mjs';
+import { cifrasPortada, instagramCabecera, bloqueUnete } from './scripts/lib/html.mjs';
 
 const MANIFIESTO = 'public/fotos/fotos.json';
 const TEXTOS = 'content/textos.json';
@@ -42,6 +42,7 @@ function fotos() {
       }
       const textos = JSON.parse(fs.readFileSync(TEXTOS, 'utf8'));
       html = html.replace(/<!--texto:([\w.]+)-->/g, (_, clave) => esc(clave.split('.').reduce((o, k) => o?.[k], textos) ?? ''));
+      html = html.replace('<!--instagram-cabecera-->', instagramCabecera(textos)).replace('<!--unete-->', bloqueUnete(textos));
 
       const con = (papel) => lista.filter((f) => f.papel === papel);
       const [portada] = con('portada');

@@ -976,11 +976,150 @@ button {
   background: var(--degradado);
 }
 
+/* ---------- ¿te vienes a la próxima? ---------- */
+
+.unete {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 1440px;
+  margin: 6rem auto 0;
+  padding: clamp(3.5rem, 10vw, 7rem) var(--margen);
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 1.4rem;
+}
+
+/* Un sol poniéndose detrás del titular */
+.unete-sol {
+  position: absolute;
+  left: 50%;
+  bottom: -38%;
+  width: min(120vw, 900px);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 182, 39, 0.5) 0%, rgba(255, 122, 26, 0.32) 30%, rgba(200, 29, 37, 0.16) 52%, transparent 70%);
+  z-index: -1;
+}
+
+.unete::after {
+  content: '';
+  position: absolute;
+  left: var(--margen);
+  right: var(--margen);
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--naranja), transparent);
+}
+
+.unete h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(3rem, 13vw, 8rem);
+  line-height: 1.14; /* deja sitio al acento de PRÓXIMA */
+  max-width: 12ch;
+  color: var(--texto);
+}
+
+.unete-texto {
+  max-width: 34rem;
+  color: var(--texto-2);
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+}
+
+.unete-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 0.6rem;
+}
+
+.icono {
+  display: block;
+  flex: none;
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 52px;
+  padding: 0.85rem 1.6rem 0.85rem 1.35rem;
+  border-radius: 999px;
+  background: var(--degradado);
+  color: var(--negro);
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 14px 40px -14px rgba(255, 122, 26, 0.75);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.boton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 46px -12px rgba(255, 122, 26, 0.95);
+}
+
+.enlace-flecha {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  color: var(--ambar);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 182, 39, 0.35);
+}
+
+.enlace-flecha:hover {
+  color: var(--texto);
+  border-bottom-color: var(--texto);
+}
+
+/* Instagram en la cabecera */
+.red-social {
+  position: absolute;
+  top: max(1.1rem, env(safe-area-inset-top));
+  right: var(--margen);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--texto);
+  background: rgba(11, 9, 7, 0.35);
+  border: 1px solid rgba(255, 236, 214, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.red-social:hover {
+  color: var(--ambar);
+  border-color: var(--ambar);
+}
+
+.red-social .icono {
+  width: 22px;
+  height: 22px;
+}
+
 /* ---------- pie ---------- */
 
 .pie {
   max-width: 1440px;
-  margin: 5rem auto 0;
+  margin: 3.5rem auto 0;
   padding: 0 var(--margen) max(2rem, env(safe-area-inset-bottom));
 }
 

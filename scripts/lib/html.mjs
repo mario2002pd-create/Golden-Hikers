@@ -51,3 +51,29 @@ export function cifrasPortada(html, datos) {
       }),
     );
 }
+
+/** Icono de Instagram (trazo propio en SVG, hereda el color del texto). */
+export const ICONO_INSTAGRAM =
+  '<svg class="icono" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>';
+
+const FLECHA = '<svg class="icono" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/** Enlace a Instagram para la cabecera. */
+export function instagramCabecera(textos) {
+  return `<a class="red-social" href="${esc(textos.enlaces.instagram)}" rel="noopener" target="_blank" aria-label="${NOMBRE} en Instagram">${ICONO_INSTAGRAM}</a>`;
+}
+
+/** Bloque final «¿Te vienes a la próxima?». */
+export function bloqueUnete(textos) {
+  const u = textos.unete;
+  const e = textos.enlaces;
+  return `<section class="unete" aria-labelledby="titulo-unete">
+      <div class="unete-sol" aria-hidden="true"></div>
+      <h2 id="titulo-unete">${esc(u.titulo)}</h2>
+      <p class="unete-texto">${esc(u.texto)}</p>
+      <div class="unete-acciones">
+        <a class="boton" href="${esc(e.instagram)}" rel="noopener" target="_blank">${ICONO_INSTAGRAM}<span>${esc(u.boton)}</span></a>
+        <a class="enlace-flecha" href="${esc(e.wikiloc)}" rel="noopener" target="_blank"><span>${esc(u.wikiloc)}</span>${FLECHA}</a>
+      </div>
+    </section>`;
+}

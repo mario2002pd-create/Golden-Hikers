@@ -14,5 +14,15 @@
   },
   "corte": {
     "frase": "Subir para ver caer el sol"
+  },
+  "enlaces": {
+    "instagram": "https://www.instagram.com/goldenhikers/",
+    "wikiloc": "https://es.wikiloc.com/wikiloc/user.do?id=23250169"
+  },
+  "unete": {
+    "titulo": "¿Te vienes a la próxima?",
+    "texto": "Escríbenos por Instagram y te contamos cuándo y por dónde es la siguiente salida. Si quieres ver antes cómo son, todas las rutas están en Wikiloc.",
+    "boton": "Escríbenos en Instagram",
+    "wikiloc": "Ver nuestras rutas en Wikiloc"
   }
 }

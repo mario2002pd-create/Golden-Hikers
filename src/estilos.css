@@ -826,6 +826,41 @@ button {
   text-decoration: none;
 }
 
+.ruta-acciones {
+  flex: none;
+  width: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ruta-mapa,
+.ruta-wikiloc {
+  min-height: 36px;
+}
+
+.ruta-wikiloc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  color: var(--texto-3);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.ruta-wikiloc span {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.ruta-wikiloc:hover,
+.ruta-wikiloc:focus-visible {
+  color: var(--ambar);
+}
+
 .ruta-mapa {
   appearance: none;
   flex: none;
@@ -1601,6 +1636,10 @@ a:focus-visible .gh-impacto {
   max-width: 32rem;
   font-size: clamp(1rem, 2.6vw, 1.2rem);
   color: var(--texto);
+}
+
+.ficha-wikiloc {
+  margin-top: 1.1rem;
 }
 
 .ficha-cifras {

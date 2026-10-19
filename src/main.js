@@ -11,6 +11,9 @@ const ESTILO = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json
 const BASE = import.meta.env.BASE_URL;
 const ICONO_MAPA =
   '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+// Flecha que sale de una caja: enlace externo (Wikiloc).
+const ICONO_WIKILOC =
+  '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const COLOR = { ambar: '#ffb627', naranja: '#ff7a1a', dorado: '#ff5a00', claro: '#fff1d6' };
 
 const anio = (r) => (r.fecha ? Number(r.fecha.slice(0, 4)) : null);
@@ -111,7 +114,10 @@ function filaRuta(r) {
           <span class="ruta-desnivel"><i class="barra" aria-hidden="true"><b style="width:${ancho}%"></b></i>${num(r.desnivel)} m</span>
         </span>
       </a>
-      <button type="button" class="ruta-mapa" data-id="${r.id}" aria-pressed="${r.id === estado.seleccionada}" aria-label="Ver ${esc(r.nombre)} en el mapa" title="Ver en el mapa">${ICONO_MAPA}</button>
+      <span class="ruta-acciones">
+        <button type="button" class="ruta-mapa" data-id="${r.id}" aria-pressed="${r.id === estado.seleccionada}" aria-label="Ver ${esc(r.nombre)} en el mapa" title="Ver en el mapa">${ICONO_MAPA}</button>
+        ${r.wikiloc ? `<a class="ruta-wikiloc" href="${esc(r.wikiloc)}" target="_blank" rel="noopener" aria-label="${esc(r.nombre)} en Wikiloc (se abre en otra pestaña)" title="Ver en Wikiloc">${ICONO_WIKILOC}<span>Wikiloc</span></a>` : ''}
+      </span>
     </li>`;
 }
 

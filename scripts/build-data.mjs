@@ -34,6 +34,7 @@ const SALIDA = path.join(RAIZ, 'public/rutas.json');
 const FOTOS = path.join(RAIZ, 'public/fotos/fotos.json');
 const DIR_OG = path.join(RAIZ, 'public/og');
 const TEXTOS = path.join(RAIZ, 'content/textos.json');
+const WIKILOC = path.join(RAIZ, 'data/wikiloc.json');
 const DIR_FICHAS = path.join(RAIZ, 'ruta'); // generado: una carpeta por ficha (no va a git)
 
 // Parámetros calibrados con las 3 rutas de prueba contra las cifras de Strava (ver README).
@@ -117,8 +118,21 @@ function procesar(archivo) {
   };
 }
 
+/** Enlace de Wikiloc de una ruta (data/wikiloc.json, por nombre de archivo o por fecha). */
+function enlaceWikiloc(enlaces, archivo, fecha) {
+  const e = overrideDe(enlaces, archivo, fecha);
+  const url = typeof e?.url === 'string' ? e.url.trim() : '';
+  if (!url) return null;
+  if (!/^https:\/\/([a-z-]+\.)?wikiloc\.com\//.test(url)) {
+    console.warn(`AVISO  data/wikiloc.json (${e.clave}): "${url}" no parece una URL de Wikiloc; se ignora.`);
+    return null;
+  }
+  return url;
+}
+
 function generar() {
   const overrides = leerJson(OVERRIDES, {});
+  const enlaces = leerJson(WIKILOC, {});
   const archivos = fs.existsSync(DIR_GPX)
     ? fs.readdirSync(DIR_GPX).filter((f) => /\.gpx(\.gz)?$/i.test(f)).sort()
     : [];
@@ -147,6 +161,7 @@ function generar() {
     if (!r.fecha) console.warn(`AVISO  ${archivo}: no tiene fecha; ponla en overrides.json.`);
     if (!r.sol) console.warn(`AVISO  ${archivo}: el GPX no tiene horas; se queda fuera de la sección «Golden hour».`);
     if (!r.track.length) console.warn(`AVISO  ${archivo}: es demasiado corta para publicar el track recortado.`);
+    r.wikiloc = enlaceWikiloc(enlaces, archivo, r.fecha);
     rutas.push(r);
   }
 
@@ -169,9 +184,10 @@ function generar() {
       mediaKm: n ? redondear(km / n, 1) : 0,
       mediaDesnivel: n ? redondear(desnivel / n) : 0,
     },
-    rutas: rutas.map(({ id, url, nombre, fecha, km, desnivel, altitudMaxima, bbox, perfil, sol, dorado, track }) => ({
+    rutas: rutas.map(({ id, url, wikiloc, nombre, fecha, km, desnivel, altitudMaxima, bbox, perfil, sol, dorado, track }) => ({
       id,
       url,
+      wikiloc,
       nombre,
       fecha,
       km,
@@ -189,6 +205,8 @@ function generar() {
   fs.writeFileSync(SALIDA, JSON.stringify(datos));
   const kb = (fs.statSync(SALIDA).size / 1024).toFixed(0);
   console.log(`public/rutas.json: ${n} rutas, ${datos.totales.km} km, ${desnivel} m D+ (${kb} KB)`);
+  const sinWikiloc = rutas.filter((r) => !r.wikiloc).length;
+  if (sinWikiloc) console.log(`Wikiloc: ${n - sinWikiloc} de ${n} rutas con enlace (faltan en data/wikiloc.json).`);
   return { datos, rutas };
 }
 

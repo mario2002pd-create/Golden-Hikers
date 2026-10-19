@@ -166,6 +166,7 @@ export function paginaFicha({ ruta, muestras, fotos, anterior, siguiente, textos
       <p class="antetitulo"><span>Ruta ${ruta.id} de ${total}</span><span>${esc(fechaLarga(ruta.fecha))}</span></p>
       <h1 class="ficha-titulo">${esc(ruta.nombre)}</h1>
       ${lineaSol ? `<p class="ficha-sol">${esc(lineaSol)}</p>` : ''}
+      ${ruta.wikiloc ? `<a class="enlace-flecha ficha-wikiloc" href="${esc(ruta.wikiloc)}" target="_blank" rel="noopener"><span>Ver esta ruta en Wikiloc</span>${ICONO_FLECHA('der')}</a>` : ''}
       <dl class="cifras ficha-cifras">
         <div class="cifra"><dt>kilómetros</dt><dd>${num(ruta.km, 2)}<small>km</small></dd></div>
         <div class="cifra"><dt>desnivel positivo</dt><dd>${num(ruta.desnivel)}<small>m</small></dd></div>

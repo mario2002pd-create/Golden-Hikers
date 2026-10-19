@@ -31,6 +31,16 @@ La clave puede ser el nombre del archivo o la fecha (`AAAA-MM-DD`). El nombre de
 
 Campos: `nombre`, `fecha`, `km`, `desnivel`, `altitudMaxima` y `excluir`. Lo normal es poner solo el nombre, porque el de Strava suele ser genérico.
 
+## Enlaces a Wikiloc
+
+`data/wikiloc.json` tiene una entrada por ruta (clave: la fecha `AAAA-MM-DD` o el nombre del GPX) con su nombre y un hueco para la URL de esa ruta en Wikiloc:
+
+```json
+"2025-08-06": { "nombre": "Eltxumendi", "url": "https://es.wikiloc.com/rutas-senderismo/..." }
+```
+
+Las rutas con URL muestran en la lista un botón «Wikiloc» (y un enlace en su ficha) que la abre en otra pestaña; las que no la tienen, simplemente no lo muestran. El build avisa si una URL no es de wikiloc.com y dice cuántas faltan. Al añadir una ruta nueva, añade también su línea aquí.
+
 ## Textos
 
 Los textos de la web que no salen de los datos (la entradilla de la portada, «Quiénes somos», la frase del corte…) están en `content/textos.json`. Se editan ahí, sin tocar el código; en «Quiénes somos», `foto` es el principio del nombre de archivo de la foto que la acompaña (esa foto ya no se repite en la franja).

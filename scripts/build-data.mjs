@@ -18,7 +18,6 @@ import {
   fechaLocal,
   perfilAltitud,
 } from './lib/gpx.mjs';
-import { procesarFotos } from './lib/fotos.mjs';
 
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIR_GPX = path.join(RAIZ, 'data/gpx');
@@ -237,4 +236,3 @@ function comprobar({ datos, rutas }) {
 
 const resultado = generar();
 if (process.argv.includes('--comprobar')) comprobar(resultado);
-await procesarFotos(RAIZ);

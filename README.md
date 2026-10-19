@@ -33,9 +33,16 @@ Campos: `nombre`, `fecha`, `km`, `desnivel`, `altitudMaxima` y `excluir`. Lo nor
 
 ## Fotos
 
-Mete las fotos en `public/fotos/` (JPG, PNG o WebP; las HEIC del iPhone hay que convertirlas antes). La que se llame `portada.jpg` (o cualquier nombre que empiece por «portada») va a sangre en la portada; si no hay ninguna así, se usa la primera por orden alfabético. Las demás salen en la franja «Por el camino».
+Las fotos van en `public/fotos/`, ya optimizadas: WebP sin metadatos, en una versión grande (`-l`) y otra pequeña (`-s`). `public/fotos/fotos.json` dice qué papel tiene cada una:
 
-Al hacer el build se generan versiones WebP de 640, 1280 y 1920 px en `public/fotos-web/`. Esas versiones no llevan metadatos (ni la posición GPS), y las originales no se publican. Sin fotos, la portada usa un cielo de atardecer con las sierras dibujadas a partir de los perfiles de altitud de las rutas.
+| `papel` | Dónde sale |
+|---|---|
+| `portada` | Portada a pantalla completa (pantallas horizontales) |
+| `portada-movil` | Portada en pantallas verticales (móvil), con `<picture>` |
+| `corte` | A sangre, a pantalla completa, entre la portada y el mapa |
+| `galeria` | La franja «Por el camino», con la fecha y la ruta como pie |
+
+Cada foto lleva su `alt`, que es el texto alternativo de la web. Para añadir una foto basta con subir sus dos versiones y una entrada nueva en `fotos.json`. El build las mete directamente en el HTML. Sin fotos, la portada usa un cielo de atardecer con las sierras dibujadas a partir de los perfiles de altitud de las rutas.
 
 ## Cómo se calculan las cifras
 
@@ -52,4 +59,4 @@ Para parecerse a Strava, los parámetros se han calibrado con las 3 rutas de pru
 > **Ojo con dos cosas antes de publicar:**
 >
 > - **GitHub Pages en un repositorio privado exige GitHub Pro** (o un plan de pago de organización). Con el plan gratuito, el repo tiene que ser público.
-> - **Si el repositorio se hace público, los GPX originales de `data/gpx/` (y las fotos originales de `public/fotos/`, con su EXIF) quedarán visibles para cualquiera**, con el inicio y el final reales de cada ruta. El recorte de 200 m y la limpieza del EXIF solo se aplican a lo que se publica en la web, no al repositorio.
+> - **Si el repositorio se hace público, los GPX originales de `data/gpx/` quedarán visibles para cualquiera**, con el inicio y el final reales de cada ruta. El recorte de 200 m solo se aplica a lo que se publica en la web, no al repositorio. Las fotos, en cambio, se ven igual en la web que en el repo.

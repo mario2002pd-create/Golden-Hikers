@@ -128,16 +128,18 @@ button {
   background: linear-gradient(180deg, transparent 62%, rgba(11, 9, 7, 0.5) 82%, var(--negro) 100%);
 }
 
-/* Con foto: la foto a sangre, teñida de hora dorada */
-.portada-foto {
+/* Con foto: la foto a sangre; en vertical, la del móvil (<picture>) */
+.portada-foto,
+.portada-foto img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+.portada-foto img {
   object-fit: cover;
-  object-position: center 40%;
-  background-size: cover;
-  background-position: center 40%;
+  object-position: 50% 45%;
 }
 
 .con-foto .cielo,
@@ -146,20 +148,22 @@ button {
   display: none;
 }
 
+/* Las fotos ya son doradas: solo se oscurece arriba (título) y abajo (cifras) */
 .con-foto .tinte {
   background:
-    linear-gradient(180deg, rgba(11, 9, 7, 0.72) 0%, rgba(11, 9, 7, 0.1) 32%, rgba(11, 9, 7, 0.05) 50%, rgba(11, 9, 7, 0.75) 80%, var(--negro) 100%),
-    linear-gradient(200deg, rgba(255, 182, 39, 0.38) 0%, rgba(217, 72, 15, 0.32) 45%, rgba(200, 29, 37, 0.38) 100%);
+    linear-gradient(180deg, rgba(11, 9, 7, 0.78) 0%, rgba(11, 9, 7, 0.35) 30%, rgba(11, 9, 7, 0) 48%, rgba(11, 9, 7, 0.15) 60%, rgba(11, 9, 7, 0.82) 84%, var(--negro) 100%),
+    radial-gradient(90% 60% at 50% 45%, transparent 40%, rgba(60, 12, 6, 0.35) 100%);
 }
 
-.con-foto .portada-fondo::after {
-  /* capa cálida que unifica el color de cualquier foto */
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, #ffb627, #d9480f);
-  mix-blend-mode: soft-light;
-  opacity: 0.55;
+/* En vertical la foto es un cielo claro: se oscurece menos y en tono cálido */
+@media (orientation: portrait) {
+  .con-foto .tinte {
+    background:
+      linear-gradient(180deg, rgba(30, 10, 5, 0.6) 0%, rgba(30, 10, 5, 0.25) 26%, rgba(30, 10, 5, 0) 42%, rgba(11, 9, 7, 0.2) 55%, rgba(11, 9, 7, 0.85) 78%, var(--negro) 100%);
+  }
+  .con-foto .titulo-hikers {
+    text-shadow: 0 2px 30px rgba(30, 10, 5, 0.45);
+  }
 }
 
 .portada-contenido {
@@ -326,6 +330,66 @@ button {
 
 .bajar:hover {
   color: var(--texto);
+}
+
+/* ---------- corte: foto a sangre entre la portada y el mapa ---------- */
+
+.corte {
+  position: relative;
+  margin: 0;
+  height: 100vh;
+  height: 100svh;
+  min-height: 420px;
+  overflow: hidden;
+  background: var(--negro);
+}
+
+.corte img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 42% 60%;
+}
+
+.corte::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--negro) 0%, rgba(11, 9, 7, 0.1) 22%, rgba(11, 9, 7, 0) 55%, rgba(11, 9, 7, 0.7) 85%, var(--negro) 100%);
+  pointer-events: none;
+}
+
+.corte figcaption {
+  position: absolute;
+  left: var(--margen);
+  right: var(--margen);
+  bottom: clamp(2rem, 6vh, 3rem);
+  z-index: 1;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.corte-frase {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: clamp(3rem, 15vw, 7.5rem);
+  line-height: 0.88;
+  background: linear-gradient(180deg, #ffe3a3 0%, var(--ambar) 40%, var(--naranja) 75%, var(--quemado) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 24px rgba(11, 9, 7, 0.6));
+}
+
+.corte-pie {
+  max-width: 30rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--texto-2);
 }
 
 /* ---------- cuerpo ---------- */
@@ -743,7 +807,7 @@ button {
 
 .franja {
   max-width: 1440px;
-  margin: 4.5rem auto 0;
+  margin: 5.5rem auto 0;
   padding: 0 var(--margen);
 }
 
@@ -784,7 +848,10 @@ button {
 .franja-lista li {
   flex: none;
   scroll-snap-align: start;
-  position: relative;
+}
+
+.franja-lista figure {
+  margin: 0;
 }
 
 .franja-lista img {
@@ -794,18 +861,29 @@ button {
   max-width: 86vw;
   object-fit: cover;
   border-radius: 3px;
-  background-size: cover;
-  filter: saturate(1.05) contrast(1.03);
+  background: var(--negro-3);
 }
 
-.franja-lista li::after {
+.franja-lista figcaption {
+  margin-top: 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--texto-3);
+  max-width: 86vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.franja-lista figcaption::before {
   content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 3px;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 182, 39, 0.12), rgba(200, 29, 37, 0.18));
-  mix-blend-mode: soft-light;
+  display: inline-block;
+  width: 0.9rem;
+  height: 2px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  background: var(--degradado);
 }
 
 /* ---------- pie ---------- */

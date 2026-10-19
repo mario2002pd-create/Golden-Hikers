@@ -8,6 +8,9 @@ import './estilos.css';
 import { num, fecha, esc } from '../scripts/lib/formato.mjs';
 
 const ESTILO = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+const BASE = import.meta.env.BASE_URL;
+const ICONO_MAPA =
+  '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const COLOR = { ambar: '#ffb627', naranja: '#ff7a1a', dorado: '#ff5a00', claro: '#fff1d6' };
 
 const anio = (r) => (r.fecha ? Number(r.fecha.slice(0, 4)) : null);
@@ -96,8 +99,8 @@ function filaRuta(r) {
   if (r.id === estado.masDesnivel) etiquetas.push('Más desnivel');
   const ancho = Math.max(3, Math.round((r.desnivel / estado.maxDesnivel) * 100));
   return `
-    <li>
-      <button type="button" class="ruta${r.id === estado.seleccionada ? ' activa' : ''}" data-id="${r.id}" aria-pressed="${r.id === estado.seleccionada}">
+    <li class="ruta${r.id === estado.seleccionada ? ' activa' : ''}" data-id="${r.id}">
+      <a class="ruta-enlace" href="${BASE}${r.url}">
         <span class="ruta-n">${r.id}</span>
         <span class="ruta-texto">
           <span class="ruta-nombre">${esc(r.nombre)}${etiquetas.map((e) => ` <em class="etiqueta">${e}</em>`).join('')}</span>
@@ -107,7 +110,8 @@ function filaRuta(r) {
           <span class="ruta-km">${num(r.km, 2)} km</span>
           <span class="ruta-desnivel"><i class="barra" aria-hidden="true"><b style="width:${ancho}%"></b></i>${num(r.desnivel)} m</span>
         </span>
-      </button>
+      </a>
+      <button type="button" class="ruta-mapa" data-id="${r.id}" aria-pressed="${r.id === estado.seleccionada}" aria-label="Ver ${esc(r.nombre)} en el mapa" title="Ver en el mapa">${ICONO_MAPA}</button>
     </li>`;
 }
 
@@ -216,7 +220,8 @@ function contenidoPopup(r) {
   return `
     <strong>${esc(r.nombre)}</strong>
     <span class="popup-fecha">${fecha(r.fecha)}</span>
-    <span class="popup-datos">${num(r.km, 2)} km · ${num(r.desnivel)} m D+</span>`;
+    <span class="popup-datos">${num(r.km, 2)} km · ${num(r.desnivel)} m D+</span>
+    <a class="popup-enlace" href="${BASE}${r.url}">Ver la ficha →</a>`;
 }
 
 function resaltar(id) {
@@ -439,10 +444,10 @@ async function iniciarMapa() {
 
 function seleccionar(id, { encuadrar: zoom = false, lngLat = null, desplazar = false } = {}) {
   estado.seleccionada = id;
-  for (const b of document.querySelectorAll('.ruta')) {
-    const activa = Number(b.dataset.id) === id;
-    b.classList.toggle('activa', activa);
-    b.setAttribute('aria-pressed', String(activa));
+  for (const fila of document.querySelectorAll('.ruta')) {
+    const activa = Number(fila.dataset.id) === id;
+    fila.classList.toggle('activa', activa);
+    fila.querySelector('.ruta-mapa')?.setAttribute('aria-pressed', String(activa));
   }
   if (!mapa) return;
   resaltar(id);
@@ -489,8 +494,9 @@ function enlazar() {
     marcarBotones(e.currentTarget, 'data-orden', estado.orden);
     pintarLista();
   });
+  // La fila enlaza a la ficha; el botón de la diana lleva la ruta al mapa.
   document.getElementById('lista').addEventListener('click', (e) => {
-    const b = e.target.closest('.ruta');
+    const b = e.target.closest('.ruta-mapa');
     if (!b) return;
     const id = Number(b.dataset.id);
     seleccionar(id, { encuadrar: true });

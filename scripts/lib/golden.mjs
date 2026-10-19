@@ -5,12 +5,12 @@ import { esc, num, fecha, horaLocal } from './formato.mjs';
 const MIN = 60000;
 const ms = (iso) => Date.parse(iso);
 
-/** "43 min antes", "1 h 24 min después", "a la vez". */
+/** "43 min antes de la puesta de sol", "1 h 24 min después de la puesta de sol"… */
 export function respectoOcaso(min) {
   if (min === 0) return 'justo al ponerse el sol';
   const a = Math.abs(min);
   const t = a >= 60 ? `${Math.floor(a / 60)} h${a % 60 ? ` ${a % 60} min` : ''}` : `${a} min`;
-  return `${t} ${min < 0 ? 'antes' : 'después'} de la puesta`;
+  return `${t} ${min < 0 ? 'antes' : 'después'} de la puesta de sol`;
 }
 
 const duracion = (min) => (min >= 60 ? `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')} min` : `${min} min`);

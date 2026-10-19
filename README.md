@@ -55,6 +55,15 @@ Para parecerse a Strava, los parámetros se han calibrado con las 3 rutas de pru
 - **Distancia:** se quitan los saltos del GPS (más de 4 m/s respecto al último punto bueno), se suaviza la posición con una media de 5 puntos y no se cuentan los movimientos de menos de 1 m (el temblor del GPS cuando estamos parados).
 - **Desnivel:** la altitud se remuestrea cada 10 m recorridos y se suman las subidas con una histéresis de 1,5 m, sin media móvil.
 
+## Fichas de ruta
+
+Cada ruta tiene su página, generada en el build: `ruta/NN-nombre/` (el número es el orden cronológico y el nombre sale del nombre del GPX, sin la fecha). Lleva el mapa del track, el perfil de altitud interactivo (sincronizado con el mapa), los kilómetros, el desnivel, la cota máxima, la hora de inicio, la relación con la puesta de sol y su propia imagen para compartir (`og/ruta-NN.jpg`).
+
+- Las fotos se asignan por la fecha del nombre del archivo: una foto `2025-12-14_….webp` sale en la ficha de la ruta del 14/12/2025. Las fotos de la galería siguen en la franja general, y si tienen ruta, su pie enlaza a la ficha.
+- El perfil cubre la ruta entera, pero en los primeros y últimos 200 m no hay posición: el marcador del mapa nunca enseña el inicio ni el final reales.
+- La lista de la portada, el mapa (desde el popup) y el gráfico de «Golden hour» enlazan a cada ficha. El botón de la diana de cada fila lleva la ruta al mapa.
+- La carpeta `ruta/` es generada (no va a git). Todo se recalcula solo al añadir un GPX.
+
 ## Golden hour
 
 Con las horas de cada GPX y [SunCalc](https://github.com/mourner/suncalc), el build calcula para cada ruta la puesta de sol en la cima (el punto más alto) ese día, y cuánto antes o después de la puesta estábamos arriba. La hora dorada va de `goldenHour` (el sol a 6° sobre el horizonte) a `sunset`.

@@ -20,6 +20,9 @@ import {
 } from './lib/gpx.mjs';
 import { tarjetaOG } from './lib/og.mjs';
 import { analizarSol, enHoraDorada, tramos } from './lib/sol.mjs';
+import { rutaUrl, muestrasPerfil, paginaFicha } from './lib/ficha.mjs';
+import { dibujoTrack } from './lib/og.mjs';
+import { fecha as fechaCorta } from './lib/formato.mjs';
 import { num } from './lib/formato.mjs';
 import { EVEREST, NOMBRE } from './lib/sitio.mjs';
 
@@ -30,6 +33,8 @@ const REFERENCIA = path.join(RAIZ, 'docs/referencia.json');
 const SALIDA = path.join(RAIZ, 'public/rutas.json');
 const FOTOS = path.join(RAIZ, 'public/fotos/fotos.json');
 const DIR_OG = path.join(RAIZ, 'public/og');
+const TEXTOS = path.join(RAIZ, 'content/textos.json');
+const DIR_FICHAS = path.join(RAIZ, 'ruta'); // generado: una carpeta por ficha (no va a git)
 
 // Parámetros calibrados con las 3 rutas de prueba contra las cifras de Strava (ver README).
 export const PARAMETROS = {
@@ -106,6 +111,9 @@ function procesar(archivo) {
     sol,
     dorado,
     track: publico,
+    // Para la ficha (no van a rutas.json):
+    limpios,
+    dist,
   };
 }
 
@@ -143,7 +151,10 @@ function generar() {
   }
 
   rutas.sort((a, b) => (a.fecha ?? '9999').localeCompare(b.fecha ?? '9999') || (a.hora ?? '').localeCompare(b.hora ?? ''));
-  rutas.forEach((r, i) => (r.id = i + 1));
+  rutas.forEach((r, i) => {
+    r.id = i + 1;
+    r.url = rutaUrl(r.id, r.archivo, r.nombre);
+  });
 
   const km = rutas.reduce((s, r) => s + r.km, 0);
   const desnivel = rutas.reduce((s, r) => s + r.desnivel, 0);
@@ -158,8 +169,9 @@ function generar() {
       mediaKm: n ? redondear(km / n, 1) : 0,
       mediaDesnivel: n ? redondear(desnivel / n) : 0,
     },
-    rutas: rutas.map(({ id, nombre, fecha, km, desnivel, altitudMaxima, bbox, perfil, sol, dorado, track }) => ({
+    rutas: rutas.map(({ id, url, nombre, fecha, km, desnivel, altitudMaxima, bbox, perfil, sol, dorado, track }) => ({
       id,
+      url,
       nombre,
       fecha,
       km,
@@ -267,6 +279,50 @@ async function imagenesOG({ datos }) {
   });
 }
 
+// ---------- fichas de ruta ----------
+
+/** Fecha de una ruta para emparejar fotos: la del nombre del GPX (AAAA-MM-DD_…) o la calculada. */
+const fechaArchivo = (r) => (r.archivo.match(/^(\d{4}-\d{2}-\d{2})_/) || [])[1] ?? r.fecha;
+
+async function fichas({ datos, rutas }) {
+  const textos = leerJson(TEXTOS, {});
+  const fotos = leerJson(FOTOS, { fotos: [] }).fotos ?? [];
+  fs.rmSync(DIR_FICHAS, { recursive: true, force: true });
+  for (const [i, r] of rutas.entries()) {
+    const publica = datos.rutas[i];
+    const muestras = muestrasPerfil(r.limpios, r.dist, {
+      recorte: PARAMETROS.recorte,
+      dorado: (p) => enHoraDorada(p, r.sol),
+    });
+    // Fotos asignadas por la fecha del nombre del archivo.
+    const suyas = fotos.filter((f) => f.grande.archivo.startsWith(`${fechaArchivo(r)}_`));
+    const html = paginaFicha({
+      ruta: publica,
+      muestras,
+      fotos: suyas,
+      anterior: datos.rutas[i - 1],
+      siguiente: datos.rutas[i + 1],
+      textos,
+      total: datos.rutas.length,
+    });
+    fs.mkdirSync(path.join(RAIZ, r.url), { recursive: true });
+    fs.writeFileSync(path.join(RAIZ, r.url, 'index.html'), html);
+
+    const n2 = String(r.id).padStart(2, '0');
+    await tarjetaOG({
+      raiz: RAIZ,
+      salida: path.join(DIR_OG, `ruta-${n2}.jpg`),
+      antetitulo: `${NOMBRE} · ruta ${r.id} · ${fechaCorta(r.fecha)}`,
+      titulo: r.nombre,
+      pie: `${num(r.km, 2)} km · ${num(r.desnivel)} m D+ · cima ${num(r.altitudMaxima)} m`,
+      extra: dibujoTrack(r.track, { x: 760, y: 120, ancho: 380, alto: 360 }),
+      anchoTitulo: 640,
+    });
+  }
+  console.log(`ruta/: ${rutas.length} fichas generadas`);
+}
+
 const resultado = generar();
 if (process.argv.includes('--comprobar')) comprobar(resultado);
 await imagenesOG(resultado);
+await fichas(resultado);

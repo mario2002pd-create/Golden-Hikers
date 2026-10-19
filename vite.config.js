@@ -5,6 +5,7 @@ import { esc } from './scripts/lib/formato.mjs';
 import { cifrasPortada } from './scripts/lib/html.mjs';
 
 const MANIFIESTO = 'public/fotos/fotos.json';
+const TEXTOS = 'content/textos.json';
 const DATOS = 'public/rutas.json';
 const formatoFecha = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 
@@ -39,11 +40,27 @@ function fotos() {
       } catch {
         // Sin fotos: la portada usa el cielo dibujado en CSS.
       }
+      const textos = JSON.parse(fs.readFileSync(TEXTOS, 'utf8'));
+      html = html.replace(/<!--texto:([\w.]+)-->/g, (_, clave) => esc(clave.split('.').reduce((o, k) => o?.[k], textos) ?? ''));
+
       const con = (papel) => lista.filter((f) => f.papel === papel);
       const [portada] = con('portada');
       const [movil] = con('portada-movil');
       const [corte] = con('corte');
-      const galeria = con('galeria');
+      const qs = textos.quienesSomos;
+      const fotoGrupo = lista.find((f) => qs?.foto && f.grande.archivo.startsWith(qs.foto));
+      // La foto de «Quiénes somos» no se repite en la franja.
+      const galeria = con('galeria').filter((f) => f !== fotoGrupo);
+
+      if (qs) {
+        const foto = fotoGrupo
+          ? `<figure class="quienes-foto"><img src="${base}fotos/${fotoGrupo.pequena.archivo}" srcset="${srcset(fotoGrupo)}" sizes="(min-width: 960px) 50vw, 100vw" width="${fotoGrupo.grande.ancho}" height="${fotoGrupo.grande.alto}" alt="${esc(fotoGrupo.alt)}" loading="lazy" decoding="async" /></figure>`
+          : '';
+        html = html.replace(
+          '<!--quienes-somos-->',
+          `<section class="quienes" aria-labelledby="titulo-quienes"><div class="quienes-texto"><p class="antetitulo">${esc(qs.antetitulo)}</p><h2 id="titulo-quienes">${esc(qs.titulo)}</h2>${qs.parrafos.map((p) => `<p>${esc(p)}</p>`).join('')}</div>${foto}</section>`,
+        );
+      }
 
       if (portada || movil) {
         const foto = portada ?? movil;
@@ -59,7 +76,7 @@ function fotos() {
       if (corte) {
         html = html.replace(
           '<!--foto-corte-->',
-          `<figure class="corte"><img src="${base}fotos/${corte.grande.archivo}" srcset="${srcset(corte)}" sizes="max(100vw, ${Math.round(100 * aspecto(corte))}svh)" width="${corte.grande.ancho}" height="${corte.grande.alto}" alt="${esc(corte.alt)}" loading="lazy" decoding="async" /><figcaption><span class="corte-frase">Subir para ver<br />caer el sol</span><span class="corte-pie">${esc(corte.alt)}</span></figcaption></figure>`,
+          `<figure class="corte"><img src="${base}fotos/${corte.grande.archivo}" srcset="${srcset(corte)}" sizes="max(100vw, ${Math.round(100 * aspecto(corte))}svh)" width="${corte.grande.ancho}" height="${corte.grande.alto}" alt="${esc(corte.alt)}" loading="lazy" decoding="async" /><figcaption><span class="corte-frase">${esc(textos.corte?.frase ?? '')}</span><span class="corte-pie">${esc(corte.alt)}</span></figcaption></figure>`,
         );
       }
 

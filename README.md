@@ -31,6 +31,10 @@ La clave puede ser el nombre del archivo o la fecha (`AAAA-MM-DD`). El nombre de
 
 Campos: `nombre`, `fecha`, `km`, `desnivel`, `altitudMaxima` y `excluir`. Lo normal es poner solo el nombre, porque el de Strava suele ser genérico.
 
+## Textos
+
+Los textos de la web que no salen de los datos (la entradilla de la portada, «Quiénes somos», la frase del corte…) están en `content/textos.json`. Se editan ahí, sin tocar el código; en «Quiénes somos», `foto` es el principio del nombre de archivo de la foto que la acompaña (esa foto ya no se repite en la franja).
+
 ## Fotos
 
 Las fotos van en `public/fotos/`, ya optimizadas: WebP sin metadatos, en una versión grande (`-l`) y otra pequeña (`-s`). `public/fotos/fotos.json` dice qué papel tiene cada una:

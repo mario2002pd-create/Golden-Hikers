@@ -1,0 +1,18 @@
+{
+  "portada": {
+    "entradilla": "Todas las rutas que hemos hecho juntos, con los kilómetros y el desnivel de cada salida."
+  },
+  "quienesSomos": {
+    "antetitulo": "Quiénes somos",
+    "titulo": "Gente joven, monte y atardeceres",
+    "parrafos": [
+      "Somos un grupo de gente joven, todos mayores de 18, de Pamplona y alrededores.",
+      "Quedamos para subir montes de Navarra, casi siempre con la idea de llegar arriba cuando el sol empieza a caer.",
+      "Vamos a nuestro ritmo, en buena compañía y sin prisa por bajar."
+    ],
+    "foto": "2025-12-14_perdon-foto-grupo"
+  },
+  "corte": {
+    "frase": "Subir para ver caer el sol"
+  }
+}

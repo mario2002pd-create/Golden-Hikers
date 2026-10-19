@@ -24,5 +24,10 @@
     "texto": "Escríbenos por Instagram y te contamos cuándo y por dónde es la siguiente salida. Si quieres ver antes cómo son, todas las rutas están en Wikiloc.",
     "boton": "Escríbenos en Instagram",
     "wikiloc": "Ver nuestras rutas en Wikiloc"
+  },
+  "goldenHour": {
+    "titulo": "Golden hour",
+    "entradilla": "Nuestro nombre no es casualidad. Con la hora de cada GPX y la posición del sol en la cima, esto es lo cerca que hemos llegado del atardecer en cada salida. La hora dorada va desde que el sol baja de 6° sobre el horizonte hasta que se pone.",
+    "manana": "Las salidas de día completo, que no iban a por el atardecer. Van en hora del reloj."
   }
 }

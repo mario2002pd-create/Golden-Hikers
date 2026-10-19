@@ -55,6 +55,15 @@ Para parecerse a Strava, los parámetros se han calibrado con las 3 rutas de pru
 - **Distancia:** se quitan los saltos del GPS (más de 4 m/s respecto al último punto bueno), se suaviza la posición con una media de 5 puntos y no se cuentan los movimientos de menos de 1 m (el temblor del GPS cuando estamos parados).
 - **Desnivel:** la altitud se remuestrea cada 10 m recorridos y se suman las subidas con una histéresis de 1,5 m, sin media móvil.
 
+## Golden hour
+
+Con las horas de cada GPX y [SunCalc](https://github.com/mourner/suncalc), el build calcula para cada ruta la puesta de sol en la cima (el punto más alto) ese día, y cuánto antes o después de la puesta estábamos arriba. La hora dorada va de `goldenHour` (el sol a 6° sobre el horizonte) a `sunset`.
+
+- Una ruta es «de mañana» si empezó antes del mediodía solar; esas van en su propio gráfico, en hora del reloj.
+- «Vio el atardecer» quiere decir que estábamos andando en el momento de la puesta.
+- En el mapa, los tramos andados en hora dorada salen en naranja intenso, sobre el track ya recortado 200 m por cada lado.
+- Un GPX sin horas se queda fuera de esta sección (el build avisa).
+
 ## Publicar
 
 La web se publica en **https://mario2002pd-create.github.io/golden-hikers-web/** (un repositorio público aparte que solo contiene `dist/`). Esa dirección está en `scripts/lib/sitio.mjs`: el build la usa como base absoluta de todos los recursos y en los metadatos Open Graph, para que al compartir un enlace salga la tarjeta con la foto.

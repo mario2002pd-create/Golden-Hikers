@@ -19,6 +19,7 @@ import {
   perfilAltitud,
 } from './lib/gpx.mjs';
 import { tarjetaOG } from './lib/og.mjs';
+import { analizarSol, enHoraDorada, tramos } from './lib/sol.mjs';
 import { num } from './lib/formato.mjs';
 import { EVEREST, NOMBRE } from './lib/sitio.mjs';
 
@@ -76,7 +77,13 @@ function procesar(archivo) {
   const limpios = suavizarPosicion(quitarSaltos(puntos, PARAMETROS.saltos), PARAMETROS.posicion);
   const dist = distanciaFiltrada(limpios, PARAMETROS.distancia);
   const tiempo = puntos.find((p) => p.t)?.t ?? inicio;
-  const publico = simplificar(recortar(limpios, dist, PARAMETROS.recorte), PARAMETROS.simplificacion);
+  const recortados = recortar(limpios, dist, PARAMETROS.recorte);
+  const publico = simplificar(recortados, PARAMETROS.simplificacion);
+  // El sol se calcula con el GPX entero; los tramos dorados, sobre el track ya recortado.
+  const sol = analizarSol(puntos);
+  const dorado = sol
+    ? tramos(recortados, (p) => enHoraDorada(p, sol)).map((t) => simplificar(t, PARAMETROS.simplificacion))
+    : [];
 
   let bbox = null;
   if (publico.length) {
@@ -96,6 +103,8 @@ function procesar(archivo) {
     altitudMaxima: redondear(altitudMaxima(puntos)),
     bbox,
     perfil: perfilAltitud(limpios, dist, PARAMETROS.perfil),
+    sol,
+    dorado,
     track: publico,
   };
 }
@@ -128,6 +137,7 @@ function generar() {
       console.warn(`AVISO  ${archivo}: el GPX dice que es de tipo "${r.tipo}". Si no es una ruta a pie, exclúyela en overrides.json.`);
     }
     if (!r.fecha) console.warn(`AVISO  ${archivo}: no tiene fecha; ponla en overrides.json.`);
+    if (!r.sol) console.warn(`AVISO  ${archivo}: el GPX no tiene horas; se queda fuera de la sección «Golden hour».`);
     if (!r.track.length) console.warn(`AVISO  ${archivo}: es demasiado corta para publicar el track recortado.`);
     rutas.push(r);
   }
@@ -148,7 +158,7 @@ function generar() {
       mediaKm: n ? redondear(km / n, 1) : 0,
       mediaDesnivel: n ? redondear(desnivel / n) : 0,
     },
-    rutas: rutas.map(({ id, nombre, fecha, km, desnivel, altitudMaxima, bbox, perfil, track }) => ({
+    rutas: rutas.map(({ id, nombre, fecha, km, desnivel, altitudMaxima, bbox, perfil, sol, dorado, track }) => ({
       id,
       nombre,
       fecha,
@@ -157,6 +167,8 @@ function generar() {
       altitudMaxima,
       bbox,
       perfil,
+      sol,
+      dorado,
       track,
     })),
   };

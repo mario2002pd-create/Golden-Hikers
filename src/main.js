@@ -8,7 +8,7 @@ import './estilos.css';
 import { num, fecha, esc } from '../scripts/lib/formato.mjs';
 
 const ESTILO = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
-const COLOR = { ambar: '#ffb627', naranja: '#ff7a1a', claro: '#fff1d6' };
+const COLOR = { ambar: '#ffb627', naranja: '#ff7a1a', dorado: '#ff5a00', claro: '#fff1d6' };
 
 const anio = (r) => (r.fecha ? Number(r.fecha.slice(0, 4)) : null);
 
@@ -168,6 +168,20 @@ function puntosCalor(rutas, paso = 40) {
   return { type: 'FeatureCollection', features };
 }
 
+/** Tramos andados en hora dorada (ya vienen recortados del build). */
+function tramosDorados(rutas) {
+  return {
+    type: 'FeatureCollection',
+    features: rutas
+      .filter((r) => r.dorado?.length)
+      .map((r) => ({
+        type: 'Feature',
+        properties: { id: r.id, anio: anio(r) },
+        geometry: { type: 'MultiLineString', coordinates: r.dorado },
+      })),
+  };
+}
+
 function lineasRutas(rutas) {
   return {
     type: 'FeatureCollection',
@@ -234,7 +248,7 @@ function filtroAnio() {
 
 function aplicarFiltroMapa() {
   if (!mapaListo) return;
-  for (const capa of ['rutas-halo', 'rutas-linea', 'rutas-impacto', 'calor']) mapa.setFilter(capa, filtroAnio());
+  for (const capa of ['rutas-halo', 'rutas-linea', 'dorado-halo', 'dorado-linea', 'rutas-impacto', 'calor']) mapa.setFilter(capa, filtroAnio());
 }
 
 function aplicarModo() {
@@ -242,6 +256,8 @@ function aplicarModo() {
   const rutas = estado.modo === 'rutas' ? 'visible' : 'none';
   mapa.setLayoutProperty('rutas-halo', 'visibility', rutas);
   mapa.setLayoutProperty('rutas-linea', 'visibility', rutas);
+  mapa.setLayoutProperty('dorado-halo', 'visibility', rutas);
+  mapa.setLayoutProperty('dorado-linea', 'visibility', rutas);
   mapa.setLayoutProperty('calor', 'visibility', estado.modo === 'calor' ? 'visible' : 'none');
   document.querySelector('.mapa-marco').classList.toggle('modo-calor', estado.modo === 'calor');
 }
@@ -289,6 +305,7 @@ async function iniciarMapa() {
     }
     mapa.addSource('rutas', { type: 'geojson', data: lineasRutas(estado.rutas) });
     mapa.addSource('calor', { type: 'geojson', data: puntosCalor(estado.rutas) });
+    mapa.addSource('dorado', { type: 'geojson', data: tramosDorados(estado.rutas) });
 
     mapa.addLayer({
       id: 'calor',
@@ -336,6 +353,29 @@ async function iniciarMapa() {
         'line-opacity': 0.95,
       },
     });
+    // Hora dorada: los tramos andados entre goldenHour y la puesta, en naranja intenso.
+    mapa.addLayer({
+      id: 'dorado-halo',
+      type: 'line',
+      source: 'dorado',
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: {
+        'line-color': COLOR.dorado,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 8, 10, 14, 22],
+        'line-blur': ['interpolate', ['linear'], ['zoom'], 8, 6, 14, 14],
+        'line-opacity': 0.6,
+      },
+    });
+    mapa.addLayer({
+      id: 'dorado-linea',
+      type: 'line',
+      source: 'dorado',
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: {
+        'line-color': COLOR.dorado,
+        'line-width': ['interpolate', ['linear'], ['zoom'], 8, 3, 14, 5],
+      },
+    });
     mapa.addLayer({
       id: 'rutas-resaltada-halo',
       type: 'line',
@@ -360,6 +400,10 @@ async function iniciarMapa() {
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': '#000', 'line-width': tactil ? 28 : 16, 'line-opacity': 0.01 },
     });
+
+    // Los tramos dorados, por encima del resalte: así se ve en qué parte de la ruta se puso el sol.
+    mapa.moveLayer('dorado-halo', 'rutas-impacto');
+    mapa.moveLayer('dorado-linea', 'rutas-impacto');
 
     mapaListo = true;
     aplicarFiltroMapa();

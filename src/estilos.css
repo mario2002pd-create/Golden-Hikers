@@ -643,6 +643,35 @@ button {
   display: flex;
 }
 
+.leyenda-rutas {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  background: rgba(11, 9, 7, 0.82);
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--texto-2);
+  pointer-events: none;
+}
+
+.leyenda-rutas i {
+  display: block;
+  width: 22px;
+  height: 4px;
+  border-radius: 2px;
+  background: #ff5a00;
+  box-shadow: 0 0 8px 2px rgba(255, 90, 0, 0.6);
+}
+
+.modo-calor .leyenda-rutas {
+  display: none;
+}
+
 /* Controles de MapLibre en tono oscuro */
 .maplibregl-ctrl-group {
   background: rgba(20, 16, 12, 0.92) !important;
@@ -891,6 +920,271 @@ button {
   font-size: 0.85rem;
   color: var(--texto-2);
   padding: 1rem 0;
+}
+
+/* ---------- golden hour ---------- */
+
+.golden {
+  position: relative;
+  isolation: isolate;
+  max-width: 1440px;
+  margin: 6rem auto 0;
+  padding: 0 var(--margen);
+}
+
+/* Un horizonte de atardecer muy suave detrás de la sección */
+.golden-cielo {
+  position: absolute;
+  inset: -4rem 0 auto 0;
+  height: 32rem;
+  z-index: -1;
+  background: radial-gradient(70% 60% at 70% 0%, rgba(255, 122, 26, 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+.golden-entradilla {
+  max-width: 44rem;
+  color: var(--texto-2);
+  font-size: clamp(1rem, 2.4vw, 1.12rem);
+}
+
+.gh-cifras {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 2rem 0 0;
+  border-top: 1px solid var(--linea-fuerte);
+}
+
+.gh-cifra {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--linea);
+}
+
+.gh-cifra dd {
+  order: -1;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(3rem, 14vw, 5.5rem);
+  line-height: 0.92;
+  color: var(--ambar);
+  text-shadow: 0 0 24px rgba(255, 122, 26, 0.35);
+  white-space: nowrap;
+}
+
+.gh-cifra dd small {
+  font-family: var(--mono);
+  font-size: 0.3em;
+  margin-left: 0.25em;
+  color: var(--naranja);
+  text-shadow: none;
+}
+
+.gh-de {
+  color: var(--texto-3);
+  font-size: 0.55em;
+  text-shadow: none;
+}
+
+.gh-cifra dt {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--texto-2);
+  max-width: 24rem;
+}
+
+@media (min-width: 760px) {
+  .gh-cifras {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-bottom: 1px solid var(--linea);
+  }
+  .gh-cifra {
+    border-bottom: 0;
+    padding: 1.25rem 1.25rem 1.4rem;
+  }
+  .gh-cifra:first-child {
+    padding-left: 0;
+  }
+  .gh-cifra:not(:last-child) {
+    border-right: 1px solid var(--linea);
+  }
+}
+
+.gh-figura {
+  margin: 3rem 0 0;
+}
+
+.gh-figura figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.gh-figura h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(1.6rem, 6vw, 2.3rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+.gh-figura figcaption p {
+  flex-basis: 100%;
+  max-width: 40rem;
+  color: var(--texto-2);
+  font-size: 0.95rem;
+}
+
+.gh-leyenda {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--texto-2);
+}
+
+.gh-leyenda li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.gh-leyenda i {
+  display: inline-block;
+  width: 18px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.gh-l-barra { background: #8a5a2e; }
+.gh-l-dorado { background: var(--ambar); height: 6px !important; }
+.gh-l-noche { background: #e2421b; }
+.gh-l-cima {
+  width: 11px !important;
+  height: 11px !important;
+  border-radius: 50% !important;
+  background: #fff1d6;
+  box-shadow: 0 0 0 2px var(--negro);
+}
+
+.gh-grafico {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.gh-estrecho { display: block; }
+.gh-ancho { display: none; }
+
+@media (min-width: 760px) {
+  .gh-estrecho { display: none; }
+  .gh-ancho { display: block; }
+}
+
+.gh-grafico text {
+  font-family: var(--mono);
+}
+
+.gh-eje {
+  font-size: 11px;
+  fill: var(--texto-3);
+}
+
+.gh-eje-dorado {
+  fill: var(--ambar);
+  letter-spacing: 0.06em;
+}
+
+.gh-rejilla {
+  stroke: rgba(255, 236, 214, 0.07);
+  stroke-width: 1;
+}
+
+.gh-guia {
+  stroke: var(--ambar);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 4;
+  opacity: 0.8;
+}
+
+.gh-banda {
+  fill: rgba(255, 182, 39, 0.08);
+}
+
+.gh-nombre {
+  font-family: var(--sans) !important;
+  font-weight: 600;
+  font-size: 13px;
+  fill: var(--texto);
+}
+
+.gh-estrecho .gh-nombre {
+  font-size: 12.5px;
+}
+
+.gh-fecha {
+  font-size: 10.5px;
+  font-weight: 400;
+  fill: var(--texto-3);
+  font-family: var(--mono);
+}
+
+.gh-valor {
+  font-size: 11.5px;
+  fill: var(--texto-2);
+}
+
+.gh-impacto {
+  fill: transparent;
+}
+
+.gh-barra {
+  stroke: #8a5a2e;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.gh-dorado {
+  stroke: var(--ambar);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.gh-noche {
+  stroke: #e2421b;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.gh-cima {
+  fill: #fff1d6;
+  stroke: var(--negro);
+  stroke-width: 2;
+}
+
+.gh-fila:hover .gh-impacto,
+a:focus-visible .gh-impacto {
+  fill: rgba(255, 122, 26, 0.08);
+}
+
+.gh-fila:hover .gh-nombre {
+  fill: var(--ambar);
+}
+
+.gh-manana .gh-barra {
+  stroke: #9c6a3a;
 }
 
 /* ---------- franja de fotos ---------- */

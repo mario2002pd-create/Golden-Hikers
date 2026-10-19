@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import { SITIO } from './scripts/lib/sitio.mjs';
 import { esc } from './scripts/lib/formato.mjs';
 import { cifrasPortada, instagramCabecera, bloqueUnete } from './scripts/lib/html.mjs';
+import { seccionGolden } from './scripts/lib/golden.mjs';
 
 const MANIFIESTO = 'public/fotos/fotos.json';
 const TEXTOS = 'content/textos.json';
@@ -31,8 +32,9 @@ function fotos() {
       base = config.base;
     },
     transformIndexHtml(html) {
-      // Cifras y Open Graph de la portada, sacadas de public/rutas.json (lo genera `npm run datos`).
-      if (fs.existsSync(DATOS)) html = cifrasPortada(html, JSON.parse(fs.readFileSync(DATOS, 'utf8')));
+      // Cifras, Open Graph y «Golden hour», sacados de public/rutas.json (lo genera `npm run datos`).
+      const datos = fs.existsSync(DATOS) ? JSON.parse(fs.readFileSync(DATOS, 'utf8')) : null;
+      if (datos) html = cifrasPortada(html, datos);
 
       let lista = [];
       try {
@@ -43,6 +45,7 @@ function fotos() {
       const textos = JSON.parse(fs.readFileSync(TEXTOS, 'utf8'));
       html = html.replace(/<!--texto:([\w.]+)-->/g, (_, clave) => esc(clave.split('.').reduce((o, k) => o?.[k], textos) ?? ''));
       html = html.replace('<!--instagram-cabecera-->', instagramCabecera(textos)).replace('<!--unete-->', bloqueUnete(textos));
+      if (datos) html = html.replace('<!--golden-hour-->', seccionGolden(datos, textos, { numero: '03' }));
 
       const con = (papel) => lista.filter((f) => f.papel === papel);
       const [portada] = con('portada');
@@ -92,7 +95,7 @@ function fotos() {
           .join('');
         html = html.replace(
           '<!--franja-fotos-->',
-          `<section class="franja" aria-labelledby="titulo-franja"><div class="franja-cabecera"><h2 id="titulo-franja"><span class="seccion-n">03</span>Por el camino</h2><p class="franja-pista">Desliza para ver más</p></div><ul class="franja-lista">${items}</ul></section>`,
+          `<section class="franja" aria-labelledby="titulo-franja"><div class="franja-cabecera"><h2 id="titulo-franja"><span class="seccion-n">04</span>Por el camino</h2><p class="franja-pista">Desliza para ver más</p></div><ul class="franja-lista">${items}</ul></section>`,
         );
       }
       return html;

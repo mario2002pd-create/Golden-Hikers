@@ -1,0 +1,124 @@
+{
+  "fotos": [
+    {
+      "id": "portada-sol",
+      "fecha": "2025-12-14",
+      "ruta": "Atardecer en el Perdón",
+      "papel": "portada",
+      "orientacion": "horizontal",
+      "alt": "Sol naranja entre la niebla, con pinos a contraluz",
+      "grande": {
+        "archivo": "2025-12-14_portada-sol-l.webp",
+        "ancho": 2400,
+        "alto": 1350,
+        "kb": 77
+      },
+      "pequena": {
+        "archivo": "2025-12-14_portada-sol-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 21
+      }
+    },
+    {
+      "id": "amanecer-valle",
+      "fecha": "2025-10-12",
+      "ruta": null,
+      "papel": "portada-movil",
+      "orientacion": "vertical",
+      "alt": "Amanecer anaranjado sobre un valle con niebla y una montaña al fondo",
+      "grande": {
+        "archivo": "2025-10-12_amanecer-valle-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 34
+      },
+      "pequena": {
+        "archivo": "2025-10-12_amanecer-valle-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 12
+      }
+    },
+    {
+      "id": "luz-de-tarde",
+      "fecha": "2025-10-06",
+      "ruta": null,
+      "papel": "galeria",
+      "orientacion": "vertical",
+      "alt": "Luz de tarde sobre dos montes y la llanura",
+      "grande": {
+        "archivo": "2025-10-06_luz-de-tarde-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 40
+      },
+      "pequena": {
+        "archivo": "2025-10-06_luz-de-tarde-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 14
+      }
+    },
+    {
+      "id": "perdon-foto-grupo",
+      "fecha": "2025-12-14",
+      "ruta": "Atardecer en el Perdón",
+      "papel": "galeria",
+      "orientacion": "horizontal",
+      "alt": "Foto de grupo en la cima del Perdón al atardecer",
+      "grande": {
+        "archivo": "2025-12-14_perdon-foto-grupo-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 234
+      },
+      "pequena": {
+        "archivo": "2025-12-14_perdon-foto-grupo-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 55
+      }
+    },
+    {
+      "id": "perdon-grupo-espaldas",
+      "fecha": "2025-12-14",
+      "ruta": "Atardecer en el Perdón",
+      "papel": "galeria",
+      "orientacion": "horizontal",
+      "alt": "El grupo, de espaldas, mirando el atardecer en la cima",
+      "grande": {
+        "archivo": "2025-12-14_perdon-grupo-espaldas-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 132
+      },
+      "pequena": {
+        "archivo": "2025-12-14_perdon-grupo-espaldas-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 38
+      }
+    },
+    {
+      "id": "higa-monreal-niebla",
+      "fecha": "2026-01-06",
+      "ruta": "Higa de Monreal",
+      "papel": "galeria",
+      "orientacion": "horizontal",
+      "alt": "Cielo rosado sobre montes con niebla y molinos de viento",
+      "grande": {
+        "archivo": "2026-01-06_higa-monreal-niebla-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 44
+      },
+      "pequena": {
+        "archivo": "2026-01-06_higa-monreal-niebla-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 12
+      }
+    }
+  ]
+}

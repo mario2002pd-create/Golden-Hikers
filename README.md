@@ -51,10 +51,14 @@ Para parecerse a Strava, los parámetros se han calibrado con las 3 rutas de pru
 - **Distancia:** se quitan los saltos del GPS (más de 4 m/s respecto al último punto bueno), se suaviza la posición con una media de 5 puntos y no se cuentan los movimientos de menos de 1 m (el temblor del GPS cuando estamos parados).
 - **Desnivel:** la altitud se remuestrea cada 10 m recorridos y se suman las subidas con una histéresis de 1,5 m, sin media móvil.
 
-## Publicar en GitHub Pages
+## Publicar
 
-1. En GitHub: *Settings → Pages → Build and deployment → Source: GitHub Actions*.
-2. Cada push a `main` lanza `.github/workflows/pages.yml`, que hace `npm ci`, `npm run build` y publica `dist/`.
+La web se publica en **https://mario2002pd-create.github.io/golden-hikers-web/** (un repositorio público aparte que solo contiene `dist/`). Esa dirección está en `scripts/lib/sitio.mjs`: el build la usa como base absoluta de todos los recursos y en los metadatos Open Graph, para que al compartir un enlace salga la tarjeta con la foto.
+
+- `npm run build` genera `dist/` listo para subir a ese repositorio.
+- Para probar `dist/` en local con rutas relativas a la raíz: `BASE=/ npm run build && npm run preview`.
+- Las cifras de la portada, la fecha de actualización y las imágenes para compartir (`public/og/`) se generan en el build: la portada muestra las cifras aunque el navegador no ejecute JavaScript.
+- `.github/workflows/pages.yml` publica `dist/` en el Pages de **este** repositorio en cada push a `main`. Si se publica solo en el repositorio aparte, se puede desactivar.
 
 > **Ojo con dos cosas antes de publicar:**
 >

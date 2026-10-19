@@ -18,13 +18,17 @@ import {
   fechaLocal,
   perfilAltitud,
 } from './lib/gpx.mjs';
+import { tarjetaOG } from './lib/og.mjs';
+import { num } from './lib/formato.mjs';
+import { EVEREST, NOMBRE } from './lib/sitio.mjs';
 
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIR_GPX = path.join(RAIZ, 'data/gpx');
 const OVERRIDES = path.join(RAIZ, 'data/overrides.json');
 const REFERENCIA = path.join(RAIZ, 'docs/referencia.json');
 const SALIDA = path.join(RAIZ, 'public/rutas.json');
-const EVEREST = 8849;
+const FOTOS = path.join(RAIZ, 'public/fotos/fotos.json');
+const DIR_OG = path.join(RAIZ, 'public/og');
 
 // Parámetros calibrados con las 3 rutas de prueba contra las cifras de Strava (ver README).
 export const PARAMETROS = {
@@ -234,5 +238,23 @@ function comprobar({ datos, rutas }) {
   console.log(avisos ? `\n${avisos} aviso(s). Revisa las rutas marcadas o fíjalas en data/overrides.json.` : '\nSin desviaciones grandes.');
 }
 
+// ---------- imágenes para compartir (Open Graph) ----------
+
+async function imagenesOG({ datos }) {
+  const fotos = leerJson(FOTOS, { fotos: [] }).fotos ?? [];
+  const portada = fotos.find((f) => f.papel === 'portada');
+  const t = datos.totales;
+  await tarjetaOG({
+    raiz: RAIZ,
+    salida: path.join(DIR_OG, 'portada.jpg'),
+    fondo: portada ? path.join(RAIZ, 'public/fotos', portada.grande.archivo) : null,
+    antetitulo: 'Senderismo en Navarra',
+    titulo: NOMBRE,
+    pie: `${num(t.rutas)} rutas · ${num(t.km, 1)} km · ${num(t.desnivel)} m D+`,
+    anchoTitulo: 900,
+  });
+}
+
 const resultado = generar();
 if (process.argv.includes('--comprobar')) comprobar(resultado);
+await imagenesOG(resultado);

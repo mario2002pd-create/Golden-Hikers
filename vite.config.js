@@ -1,11 +1,15 @@
 import fs from 'node:fs';
 import { defineConfig } from 'vite';
+import { SITIO } from './scripts/lib/sitio.mjs';
+import { esc } from './scripts/lib/formato.mjs';
+import { cifrasPortada } from './scripts/lib/html.mjs';
 
 const MANIFIESTO = 'public/fotos/fotos.json';
-const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const DATOS = 'public/rutas.json';
 const formatoFecha = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 
-const srcset = (f) => `fotos/${f.pequena.archivo} ${f.pequena.ancho}w, fotos/${f.grande.archivo} ${f.grande.ancho}w`;
+let base = '/';
+const srcset = (f) => `${base}fotos/${f.pequena.archivo} ${f.pequena.ancho}w, ${base}fotos/${f.grande.archivo} ${f.grande.ancho}w`;
 const aspecto = (f) => f.grande.ancho / f.grande.alto;
 
 function pieDeFoto(f) {
@@ -22,7 +26,13 @@ function pieDeFoto(f) {
 function fotos() {
   return {
     name: 'golden-hikers-fotos',
+    configResolved(config) {
+      base = config.base;
+    },
     transformIndexHtml(html) {
+      // Cifras y Open Graph de la portada, sacadas de public/rutas.json (lo genera `npm run datos`).
+      if (fs.existsSync(DATOS)) html = cifrasPortada(html, JSON.parse(fs.readFileSync(DATOS, 'utf8')));
+
       let lista = [];
       try {
         lista = JSON.parse(fs.readFileSync(MANIFIESTO, 'utf8')).fotos ?? [];
@@ -36,20 +46,20 @@ function fotos() {
       const galeria = con('galeria');
 
       if (portada || movil) {
-        const base = portada ?? movil;
+        const foto = portada ?? movil;
         const fuenteMovil = portada && movil
           ? `<source media="(orientation: portrait)" srcset="${srcset(movil)}" sizes="max(100vw, ${Math.round(100 * aspecto(movil))}svh)" width="${movil.grande.ancho}" height="${movil.grande.alto}" />`
           : '';
         html = html.replace('class="portada"', 'class="portada con-foto"').replace(
           '<!--foto-portada-->',
-          `<picture class="portada-foto">${fuenteMovil}<img src="fotos/${base.grande.archivo}" srcset="${srcset(base)}" sizes="max(100vw, ${Math.round(100 * aspecto(base))}vh)" width="${base.grande.ancho}" height="${base.grande.alto}" alt="${esc(base.alt)}" fetchpriority="high" decoding="async" /></picture>`,
+          `<picture class="portada-foto">${fuenteMovil}<img src="${base}fotos/${foto.grande.archivo}" srcset="${srcset(foto)}" sizes="max(100vw, ${Math.round(100 * aspecto(foto))}vh)" width="${foto.grande.ancho}" height="${foto.grande.alto}" alt="${esc(foto.alt)}" fetchpriority="high" decoding="async" /></picture>`,
         );
       }
 
       if (corte) {
         html = html.replace(
           '<!--foto-corte-->',
-          `<figure class="corte"><img src="fotos/${corte.grande.archivo}" srcset="${srcset(corte)}" sizes="max(100vw, ${Math.round(100 * aspecto(corte))}svh)" width="${corte.grande.ancho}" height="${corte.grande.alto}" alt="${esc(corte.alt)}" loading="lazy" decoding="async" /><figcaption><span class="corte-frase">Subir para ver<br />caer el sol</span><span class="corte-pie">${esc(corte.alt)}</span></figcaption></figure>`,
+          `<figure class="corte"><img src="${base}fotos/${corte.grande.archivo}" srcset="${srcset(corte)}" sizes="max(100vw, ${Math.round(100 * aspecto(corte))}svh)" width="${corte.grande.ancho}" height="${corte.grande.alto}" alt="${esc(corte.alt)}" loading="lazy" decoding="async" /><figcaption><span class="corte-frase">Subir para ver<br />caer el sol</span><span class="corte-pie">${esc(corte.alt)}</span></figcaption></figure>`,
         );
       }
 
@@ -59,7 +69,7 @@ function fotos() {
             const horizontal = aspecto(f) >= 1;
             const sizes = horizontal ? '(min-width: 960px) 740px, 86vw' : '(min-width: 960px) 240px, 36vw';
             const pie = pieDeFoto(f);
-            return `<li class="${horizontal ? 'horizontal' : 'vertical'}"><figure><img src="fotos/${f.pequena.archivo}" srcset="${srcset(f)}" sizes="${sizes}" width="${f.grande.ancho}" height="${f.grande.alto}" alt="${esc(f.alt)}" loading="lazy" decoding="async" />${pie ? `<figcaption>${esc(pie)}</figcaption>` : ''}</figure></li>`;
+            return `<li class="${horizontal ? 'horizontal' : 'vertical'}"><figure><img src="${base}fotos/${f.pequena.archivo}" srcset="${srcset(f)}" sizes="${sizes}" width="${f.grande.ancho}" height="${f.grande.alto}" alt="${esc(f.alt)}" loading="lazy" decoding="async" />${pie ? `<figcaption>${esc(pie)}</figcaption>` : ''}</figure></li>`;
           })
           .join('');
         html = html.replace(
@@ -72,8 +82,9 @@ function fotos() {
   };
 }
 
-export default defineConfig({
-  // Rutas relativas: la web funciona igual en GitHub Pages (/Golden-Hikers/) que en cualquier otra carpeta.
-  base: './',
+export default defineConfig(({ command }) => ({
+  // En el build, la dirección pública absoluta (hace falta para Open Graph).
+  // Para probar dist/ en local: BASE=/ npm run build && npm run preview
+  base: process.env.BASE ?? (command === 'build' ? SITIO : '/'),
   plugins: [fotos()],
-});
+}));

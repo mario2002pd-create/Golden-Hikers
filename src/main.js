@@ -5,40 +5,13 @@ import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './estilos.css';
+import { num, fecha, esc } from '../scripts/lib/formato.mjs';
 
-
-const EVEREST = 8849;
 const ESTILO = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 const COLOR = { ambar: '#ffb627', naranja: '#ff7a1a', claro: '#fff1d6' };
 
-// ---------- formato es-ES ----------
-
-const formatos = new Map();
-function num(v, decimales = 0) {
-  const clave = decimales;
-  if (!formatos.has(clave)) {
-    formatos.set(
-      clave,
-      new Intl.NumberFormat('es-ES', {
-        minimumFractionDigits: decimales,
-        maximumFractionDigits: decimales,
-        useGrouping: 'always', // en es-ES, 1249 se queda sin punto si no se fuerza
-      }),
-    );
-  }
-  return formatos.get(clave).format(v);
-}
-
-const formatoFecha = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
-const formatoFechaLarga = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-function fechaLocal(aaaammdd) {
-  const [a, m, d] = aaaammdd.split('-').map(Number);
-  return new Date(a, m - 1, d);
-}
-const fecha = (s) => (s ? formatoFecha.format(fechaLocal(s)).replace('.', '') : 'sin fecha');
 const anio = (r) => (r.fecha ? Number(r.fecha.slice(0, 4)) : null);
 
-const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
 // ---------- estado ----------
 
@@ -58,29 +31,6 @@ let maplibregl;
 let mapa;
 let popup;
 let mapaListo = false;
-
-// ---------- cabecera y pie ----------
-
-function pintarCifras(t) {
-  const everest = t.desnivel / EVEREST;
-  const valores = {
-    rutas: num(t.rutas),
-    km: num(t.km, 1),
-    desnivel: num(t.desnivel),
-    everest: num(everest, everest < 1 ? 2 : 1),
-  };
-  for (const [clave, texto] of Object.entries(valores)) {
-    document.querySelector(`[data-cifra="${clave}"]`).textContent = texto;
-  }
-  document.getElementById('media').textContent = t.rutas
-    ? `Media: ${num(t.mediaKm, 1)} km · ${num(t.mediaDesnivel)} m D+`
-    : '';
-}
-
-function pintarPie(generado) {
-  const f = new Date(generado);
-  document.getElementById('actualizado').textContent = `Última actualización: ${formatoFechaLarga.format(f)}`;
-}
 
 // ---------- portada: sierras dibujadas con los perfiles reales ----------
 
@@ -115,15 +65,6 @@ function pintarSierras(rutas) {
       </linearGradient>
     </defs>
     ${caminos.join('')}`;
-}
-
-function pintarRango(rutas) {
-  const fechas = rutas.map((r) => r.fecha).filter(Boolean).sort();
-  if (!fechas.length) return;
-  const mes = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' });
-  const a = mes.format(fechaLocal(fechas[0])).replace('.', '');
-  const b = mes.format(fechaLocal(fechas[fechas.length - 1])).replace('.', '');
-  document.getElementById('rango').textContent = a === b ? a : `${a} – ${b}`;
 }
 
 // ---------- lista ----------
@@ -521,7 +462,7 @@ function enlazar() {
 async function arrancar() {
   let datos;
   try {
-    const res = await fetch('./rutas.json', { cache: 'no-cache' });
+    const res = await fetch(`${import.meta.env.BASE_URL}rutas.json`, { cache: 'no-cache' });
     if (!res.ok) throw new Error(res.statusText);
     datos = await res.json();
   } catch {
@@ -537,10 +478,8 @@ async function arrancar() {
     estado.masDesnivel = datos.rutas.reduce((a, b) => (b.desnivel > a.desnivel ? b : a)).id;
   }
 
-  pintarCifras(datos.totales);
-  pintarRango(datos.rutas);
+  // Las cifras, el rango de fechas y la fecha de actualización ya vienen en el HTML (build).
   pintarSierras(datos.rutas);
-  pintarPie(datos.generado);
   pintarFiltroAnio();
   pintarLista();
   enlazar();

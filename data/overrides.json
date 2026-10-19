@@ -1,5 +1,11 @@
 {
-  "Golden_Hikers_Day_1.gpx": { "nombre": "Eltxumendi" },
-  "Golden_hikers.gpx": { "nombre": "Zolina" },
-  "golden_hikers_en_el_perdón.gpx": { "nombre": "Atardecer en el Perdón" }
+  "2025-10-04": { "desnivel": 288 },
+  "2026-01-03": { "km": 8.45 },
+  "2026-02-22": { "km": 4.72, "desnivel": 215 },
+  "2026-03-01": { "km": 12.63, "desnivel": 668, "altitudMaxima": 1403 },
+  "2026-04-25": { "desnivel": 744 },
+  "2026-05-30": { "desnivel": 742 },
+  "2026-06-06": { "desnivel": 258, "altitudMaxima": 563 },
+  "2026-07-19": { "km": 9.27, "desnivel": 286, "altitudMaxima": 1484 },
+  "2026-09-20": { "desnivel": 906 }
 }

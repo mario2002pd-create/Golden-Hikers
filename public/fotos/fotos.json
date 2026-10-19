@@ -119,6 +119,26 @@
         "alto": 506,
         "kb": 12
       }
+    },
+    {
+      "id": "cima-torre-atardecer",
+      "fecha": null,
+      "ruta": null,
+      "papel": "galeria",
+      "orientacion": "horizontal",
+      "alt": "Tres senderistas descansan en la cima junto a una torre de piedra mientras el cielo se vuelve naranja",
+      "grande": {
+        "archivo": "cima-torre-atardecer-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 118
+      },
+      "pequena": {
+        "archivo": "cima-torre-atardecer-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 36
+      }
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "name": "golden-hikers",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "datos": "node scripts/build-data.mjs",
+    "comprobar": "node scripts/build-data.mjs --comprobar",
+    "dev": "node scripts/build-data.mjs && vite",
+    "build": "node scripts/build-data.mjs --comprobar && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/archivo": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "maplibre-gl": "^6.15.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4"
+  }
+}

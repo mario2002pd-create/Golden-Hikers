@@ -1,0 +1,33 @@
+{
+  "portada": {
+    "entradilla": "Todas las rutas que hemos hecho juntos, con los kilómetros y el desnivel de cada salida."
+  },
+  "quienesSomos": {
+    "antetitulo": "Quiénes somos",
+    "titulo": "Gente joven, monte y atardeceres",
+    "parrafos": [
+      "Somos un grupo de gente joven, todos mayores de 18, de Pamplona y alrededores.",
+      "Quedamos para subir montes de Navarra, casi siempre con la idea de llegar arriba cuando el sol empieza a caer.",
+      "Vamos a nuestro ritmo, en buena compañía y sin prisa por bajar."
+    ],
+    "foto": "2025-12-14_perdon-foto-grupo"
+  },
+  "corte": {
+    "frase": "Subir para ver caer el sol"
+  },
+  "enlaces": {
+    "instagram": "https://www.instagram.com/goldenhikers/",
+    "wikiloc": "https://es.wikiloc.com/wikiloc/user.do?id=23250169"
+  },
+  "unete": {
+    "titulo": "¿Te vienes a la próxima?",
+    "texto": "Escríbenos por Instagram y te contamos cuándo y por dónde es la siguiente salida. Si quieres ver antes cómo son, todas las rutas están en Wikiloc.",
+    "boton": "Escríbenos en Instagram",
+    "wikiloc": "Ver nuestras rutas en Wikiloc"
+  },
+  "goldenHour": {
+    "titulo": "Golden hour",
+    "entradilla": "Nuestro nombre no es casualidad. Con la hora de cada GPX y la posición del sol en la cima, esto es lo cerca que hemos llegado del atardecer en cada salida. La hora dorada va desde que el sol baja de 6° sobre el horizonte hasta que se pone.",
+    "manana": "Las salidas de día completo, que no iban a por el atardecer. Van en hora del reloj."
+  }
+}

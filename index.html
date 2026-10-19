@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0907" />
+    <meta name="description" content="Golden Hikers: todas las rutas de senderismo que hemos hecho juntos por Navarra, con sus kilómetros, su desnivel y el mapa." />
+    <title>Golden Hikers · Senderismo en Navarra</title>
+    <!--og-->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffb627'/%3E%3Cstop offset='1' stop-color='%23c81d25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='6' fill='%230b0907'/%3E%3Ccircle cx='21' cy='13' r='6' fill='url(%23g)'/%3E%3Cpath d='M0 27 L9 15 L15 21 L20 16 L32 27 L32 32 L0 32 Z' fill='%230b0907' stroke='%23ff7a1a' stroke-width='1.5'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <header class="portada">
+      <div class="portada-fondo" aria-hidden="true">
+        <!--foto-portada-->
+        <div class="cielo"></div>
+        <div class="sol"></div>
+        <svg class="sierras" id="sierras" viewBox="0 0 1000 320" preserveAspectRatio="none"></svg>
+        <div class="tinte"></div>
+      </div>
+
+      <!--instagram-cabecera-->
+
+      <div class="portada-contenido">
+        <p class="antetitulo"><span>Senderismo en Navarra</span><span id="rango"></span></p>
+        <h1 class="titulo"><span class="titulo-golden">Golden</span><span class="titulo-hikers">Hikers</span></h1>
+        <p class="entradilla"><!--texto:portada.entradilla--></p>
+      </div>
+
+      <dl class="cifras">
+        <div class="cifra cifra-grande"><dt>rutas</dt><dd><span data-cifra="rutas">–</span></dd></div>
+        <div class="cifra"><dt>kilómetros andados</dt><dd><span data-cifra="km">–</span><small>km</small></dd></div>
+        <div class="cifra"><dt>metros de desnivel positivo</dt><dd><span data-cifra="desnivel">–</span><small>m</small></dd></div>
+        <div class="cifra"><dt>veces el Everest (8.849 m)</dt><dd><span data-cifra="everest">–</span><small>×</small></dd></div>
+      </dl>
+
+      <a class="bajar" href="#seccion-mapa">Ver las rutas <span aria-hidden="true">↓</span></a>
+    </header>
+
+    <!--quienes-somos-->
+
+    <!--foto-corte-->
+
+    <main class="cuerpo">
+      <section class="bloque-mapa" id="seccion-mapa" aria-labelledby="titulo-mapa">
+        <div class="bloque-cabecera">
+          <h2 id="titulo-mapa"><span class="seccion-n">01</span>El mapa</h2>
+          <div class="conmutador" role="group" aria-label="Modo del mapa">
+            <button type="button" data-modo="rutas" aria-pressed="true">Rutas</button>
+            <button type="button" data-modo="calor" aria-pressed="false">Mapa de calor</button>
+          </div>
+        </div>
+        <div class="mapa-marco">
+          <div id="mapa" class="mapa" role="region" aria-label="Mapa con todas las rutas"></div>
+          <div class="leyenda-calor" aria-hidden="true"><span>Menos pasos</span><i></i><span>Más pasos</span></div>
+          <div class="leyenda-rutas"><i></i><span>Andado en hora dorada</span></div>
+        </div>
+      </section>
+
+      <section class="bloque-lista" id="seccion-rutas" aria-labelledby="titulo-lista">
+        <div class="bloque-cabecera">
+          <h2 id="titulo-lista"><span class="seccion-n">02</span>Las rutas</h2>
+          <p class="media" id="media"></p>
+        </div>
+        <div class="filtros">
+          <div class="filtro">
+            <span class="filtro-etiqueta" id="et-anio">Año</span>
+            <div class="conmutador" role="group" aria-labelledby="et-anio" id="filtro-anio"></div>
+          </div>
+          <div class="filtro">
+            <span class="filtro-etiqueta" id="et-orden">Orden</span>
+            <div class="conmutador" role="group" aria-labelledby="et-orden" id="filtro-orden">
+              <button type="button" data-orden="fecha" aria-pressed="true">Fecha</button>
+              <button type="button" data-orden="km" aria-pressed="false">Distancia</button>
+              <button type="button" data-orden="desnivel" aria-pressed="false">Desnivel</button>
+            </div>
+          </div>
+        </div>
+        <div id="lista" class="lista" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <!--golden-hour-->
+
+    <!--franja-fotos-->
+
+    <!--unete-->
+
+    <footer class="pie">
+      <p class="pie-marca">Golden Hikers</p>
+      <div class="pie-datos">
+        <p>Datos sacados de Strava</p>
+        <p id="actualizado"></p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

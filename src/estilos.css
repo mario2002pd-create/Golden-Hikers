@@ -615,34 +615,6 @@ button {
   }
 }
 
-.leyenda-calor {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: none;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.6rem;
-  background: rgba(11, 9, 7, 0.82);
-  border-radius: 3px;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--texto-2);
-  pointer-events: none;
-}
-
-.leyenda-calor i {
-  display: block;
-  width: 72px;
-  height: 6px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, rgba(255, 182, 39, 0.35), var(--ambar), var(--naranja), #e2421b, var(--rojo));
-}
-
-.modo-calor .leyenda-calor {
-  display: flex;
-}
-
 .leyenda-rutas {
   position: absolute;
   left: 10px;
@@ -666,10 +638,6 @@ button {
   border-radius: 2px;
   background: #ff5a00;
   box-shadow: 0 0 8px 2px rgba(255, 90, 0, 0.6);
-}
-
-.modo-calor .leyenda-rutas {
-  display: none;
 }
 
 /* Controles de MapLibre en tono oscuro */

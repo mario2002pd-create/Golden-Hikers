@@ -26,7 +26,6 @@ const estado = {
   porId: new Map(),
   anio: 'todos',
   orden: 'fecha',
-  modo: 'rutas',
   seleccionada: null,
   maxDesnivel: 1,
   masLarga: null,
@@ -148,36 +147,6 @@ function marcarBotones(cont, atributo, valor) {
 
 // ---------- mapa ----------
 
-/** Puntos repartidos cada `paso` metros por cada track, para el mapa de calor. */
-function puntosCalor(rutas, paso = 40) {
-  const R = 6371008.8;
-  const rad = Math.PI / 180;
-  const features = [];
-  for (const r of rutas) {
-    const t = r.track;
-    let resto = 0;
-    for (let i = 1; i < t.length; i++) {
-      const [lon1, lat1] = t[i - 1];
-      const [lon2, lat2] = t[i];
-      const dx = (lon2 - lon1) * rad * Math.cos(((lat1 + lat2) / 2) * rad) * R;
-      const dy = (lat2 - lat1) * rad * R;
-      const largo = Math.hypot(dx, dy);
-      let d = resto;
-      while (d < largo) {
-        const f = d / largo;
-        features.push({
-          type: 'Feature',
-          properties: { anio: anio(r) },
-          geometry: { type: 'Point', coordinates: [lon1 + f * (lon2 - lon1), lat1 + f * (lat2 - lat1)] },
-        });
-        d += paso;
-      }
-      resto = d - largo;
-    }
-  }
-  return { type: 'FeatureCollection', features };
-}
-
 /** Tramos andados en hora dorada (ya vienen recortados del build). */
 function tramosDorados(rutas) {
   return {
@@ -259,18 +228,7 @@ function filtroAnio() {
 
 function aplicarFiltroMapa() {
   if (!mapaListo) return;
-  for (const capa of ['rutas-halo', 'rutas-linea', 'dorado-halo', 'dorado-linea', 'rutas-impacto', 'calor']) mapa.setFilter(capa, filtroAnio());
-}
-
-function aplicarModo() {
-  if (!mapaListo) return;
-  const rutas = estado.modo === 'rutas' ? 'visible' : 'none';
-  mapa.setLayoutProperty('rutas-halo', 'visibility', rutas);
-  mapa.setLayoutProperty('rutas-linea', 'visibility', rutas);
-  mapa.setLayoutProperty('dorado-halo', 'visibility', rutas);
-  mapa.setLayoutProperty('dorado-linea', 'visibility', rutas);
-  mapa.setLayoutProperty('calor', 'visibility', estado.modo === 'calor' ? 'visible' : 'none');
-  document.querySelector('.mapa-marco').classList.toggle('modo-calor', estado.modo === 'calor');
+  for (const capa of ['rutas-halo', 'rutas-linea', 'dorado-halo', 'dorado-linea', 'rutas-impacto']) mapa.setFilter(capa, filtroAnio());
 }
 
 async function iniciarMapa() {
@@ -315,32 +273,8 @@ async function iniciarMapa() {
       if (capa.type === 'symbol') mapa.setPaintProperty(capa.id, 'text-opacity', 0.55);
     }
     mapa.addSource('rutas', { type: 'geojson', data: lineasRutas(estado.rutas) });
-    mapa.addSource('calor', { type: 'geojson', data: puntosCalor(estado.rutas) });
     mapa.addSource('dorado', { type: 'geojson', data: tramosDorados(estado.rutas) });
 
-    mapa.addLayer({
-      id: 'calor',
-      type: 'heatmap',
-      source: 'calor',
-      layout: { visibility: 'none' },
-      paint: {
-        'heatmap-weight': 1,
-        'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 7, 0.6, 12, 1.2, 15, 2],
-        'heatmap-radius': ['interpolate', ['exponential', 2], ['zoom'], 7, 4, 11, 10, 14, 22, 17, 60],
-        'heatmap-opacity': 0.9,
-        'heatmap-color': [
-          'interpolate',
-          ['linear'],
-          ['heatmap-density'],
-          0, 'rgba(255,182,39,0)',
-          0.1, 'rgba(255,182,39,0.35)',
-          0.3, '#ffb627',
-          0.55, '#ff7a1a',
-          0.8, '#e2421b',
-          1, '#c81d25',
-        ],
-      },
-    });
     mapa.addLayer({
       id: 'rutas-halo',
       type: 'line',
@@ -418,7 +352,6 @@ async function iniciarMapa() {
 
     mapaListo = true;
     aplicarFiltroMapa();
-    aplicarModo();
     resaltar(estado.seleccionada);
 
     let encima = null;
@@ -475,13 +408,6 @@ function seleccionar(id, { encuadrar: zoom = false, lngLat = null, desplazar = f
 // ---------- eventos ----------
 
 function enlazar() {
-  document.querySelector('.bloque-mapa .conmutador').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-modo]');
-    if (!b) return;
-    estado.modo = b.dataset.modo;
-    marcarBotones(e.currentTarget, 'data-modo', estado.modo);
-    aplicarModo();
-  });
   document.getElementById('filtro-anio').addEventListener('click', (e) => {
     const b = e.target.closest('[data-anio]');
     if (!b) return;

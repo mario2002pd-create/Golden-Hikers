@@ -1,6 +1,6 @@
 # Golden Hikers
 
-La web de nuestras rutas de senderismo por Navarra: cifras totales, mapa con todos los tracks (en líneas o como mapa de calor) y la lista de salidas.
+La web de nuestras rutas de senderismo por Navarra: cifras totales, mapa con todos los tracks (con los tramos andados en hora dorada resaltados) y la lista de salidas.
 
 ```bash
 npm ci

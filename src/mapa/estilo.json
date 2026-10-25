@@ -1,0 +1,396 @@
+{
+  "version": 8,
+  "name": "Golden Hikers · noche",
+  "metadata": {
+    "descripcion": "Estilo oscuro propio sobre las teselas OpenMapTiles de OpenFreeMap. Sin glyphs: MapLibre dibuja las etiquetas con las fuentes de la web (Archivo, JetBrains Mono, Anton). El relieve (Mapterhorn) y las curvas de nivel se añaden desde src/mapa/base.js cuando hacen falta."
+  },
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": "https://tiles.openfreemap.org/planet",
+      "attribution": "<a href=\"https://openfreemap.org\" target=\"_blank\" rel=\"noopener\">OpenFreeMap</a> <a href=\"https://www.openmaptiles.org/\" target=\"_blank\" rel=\"noopener\">© OpenMapTiles</a> · Datos <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\" rel=\"noopener\">© OpenStreetMap</a>"
+    }
+  },
+  "layers": [
+    {
+      "id": "fondo",
+      "type": "background",
+      "paint": { "background-color": "#0c0a08" }
+    },
+    {
+      "id": "bosque",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "landcover",
+      "filter": ["==", ["get", "class"], "wood"],
+      "paint": {
+        "fill-color": "#13130c",
+        "fill-opacity": ["interpolate", ["linear"], ["zoom"], 6, 0.5, 11, 0.9],
+        "fill-antialias": false
+      }
+    },
+    {
+      "id": "pueblos-suelo",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "landuse",
+      "minzoom": 9,
+      "filter": ["match", ["get", "class"], ["residential", "suburb", "neighbourhood", "commercial", "industrial", "retail"], true, false],
+      "paint": { "fill-color": "#16110d", "fill-opacity": 0.9 }
+    },
+    {
+      "id": "agua",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "filter": ["!=", ["get", "brunnel"], "tunnel"],
+      "paint": { "fill-color": "#0a1317" }
+    },
+    {
+      "id": "rios",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "waterway",
+      "minzoom": 8,
+      "filter": ["all", ["==", ["get", "class"], "river"], ["!=", ["get", "brunnel"], "tunnel"]],
+      "layout": { "line-cap": "round", "line-join": "round" },
+      "paint": {
+        "line-color": "#10202a",
+        "line-width": ["interpolate", ["exponential", 1.4], ["zoom"], 8, 0.6, 14, 2.4]
+      }
+    },
+    {
+      "id": "arroyos",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "waterway",
+      "minzoom": 12,
+      "filter": ["all", ["match", ["get", "class"], ["stream", "canal"], true, false], ["!=", ["get", "brunnel"], "tunnel"]],
+      "layout": { "line-cap": "round", "line-join": "round" },
+      "paint": {
+        "line-color": "#0e1b22",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 0.4, 15, 1.1]
+      }
+    },
+    {
+      "id": "edificios",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "building",
+      "minzoom": 13,
+      "paint": { "fill-color": "#1b1511", "fill-opacity": ["interpolate", ["linear"], ["zoom"], 13, 0.5, 15, 0.9] }
+    },
+    {
+      "id": "limite-navarra",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "boundary",
+      "minzoom": 6,
+      "filter": ["all", ["==", ["get", "admin_level"], 4], ["!=", ["get", "maritime"], 1]],
+      "layout": { "line-join": "round" },
+      "paint": {
+        "line-color": "#2b221b",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.6, 12, 1.2],
+        "line-dasharray": [3, 2]
+      }
+    },
+    {
+      "id": "frontera",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "boundary",
+      "filter": ["all", ["==", ["get", "admin_level"], 2], ["!=", ["get", "maritime"], 1]],
+      "layout": { "line-join": "round" },
+      "paint": {
+        "line-color": "#3d3026",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 12, 1.6],
+        "line-dasharray": [4, 2]
+      }
+    },
+    {
+      "id": "carreteras-menores",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "filter": ["all", ["match", ["get", "class"], ["minor", "service"], true, false], ["!=", ["get", "brunnel"], "tunnel"]],
+      "layout": { "line-cap": "round", "line-join": "round" },
+      "paint": {
+        "line-color": "#1f1914",
+        "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 12, 0.5, 16, 2.5]
+      }
+    },
+    {
+      "id": "pistas",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 12,
+      "filter": ["==", ["get", "class"], "track"],
+      "layout": { "line-join": "round" },
+      "paint": {
+        "line-color": "#4a3a2b",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 0.6, 16, 1.4],
+        "line-dasharray": [3, 2],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 12, 0.6, 14, 1]
+      }
+    },
+    {
+      "id": "senderos",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 13,
+      "filter": ["all", ["==", ["get", "class"], "path"], ["!=", ["get", "subclass"], "steps"]],
+      "layout": { "line-cap": "round", "line-join": "round" },
+      "paint": {
+        "line-color": "#6e5138",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 13, 0.9, 16, 1.6],
+        "line-dasharray": [0.1, 2.4],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 0.7, 14.5, 1]
+      }
+    },
+    {
+      "id": "tren",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 10,
+      "filter": ["all", ["==", ["get", "class"], "rail"], ["!=", ["get", "brunnel"], "tunnel"]],
+      "paint": {
+        "line-color": "#251e18",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.6, 15, 1.4],
+        "line-dasharray": [2, 2]
+      }
+    },
+    {
+      "id": "carreteras-secundarias",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 9,
+      "filter": ["all", ["match", ["get", "class"], ["secondary", "tertiary"], true, false], ["!=", ["get", "brunnel"], "tunnel"]],
+      "layout": { "line-cap": "round", "line-join": "round" },
+      "paint": {
+        "line-color": "#251e17",
+        "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 9, 0.4, 16, 3.5]
+      }
+    },
+    {
+      "id": "carreteras-principales",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 6,
+      "filter": ["all", ["match", ["get", "class"], ["primary", "trunk"], true, false], ["!=", ["get", "brunnel"], "tunnel"]],
+      "layout": { "line-cap": "round", "line-join": "round" },
+      "paint": {
+        "line-color": "#2c231b",
+        "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 6, 0.4, 16, 4.5]
+      }
+    },
+    {
+      "id": "autopistas",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "minzoom": 5,
+      "filter": ["all", ["==", ["get", "class"], "motorway"], ["!=", ["get", "brunnel"], "tunnel"]],
+      "layout": { "line-cap": "round", "line-join": "round" },
+      "paint": {
+        "line-color": "#33281f",
+        "line-width": ["interpolate", ["exponential", 1.5], ["zoom"], 5, 0.5, 16, 5]
+      }
+    },
+    {
+      "id": "nombres-rios",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "waterway",
+      "minzoom": 13,
+      "filter": ["all", ["==", ["get", "class"], "river"], ["has", "name"]],
+      "layout": {
+        "symbol-placement": "line",
+        "symbol-spacing": 400,
+        "text-field": ["coalesce", ["get", "name:es"], ["get", "name"]],
+        "text-font": ["Archivo"],
+        "text-size": 10,
+        "text-letter-spacing": 0.08,
+        "text-max-angle": 30
+      },
+      "paint": {
+        "text-color": "#4b6772",
+        "text-halo-color": "#0c0a08",
+        "text-halo-width": 1.2
+      }
+    },
+    {
+      "id": "nombres-agua",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "water_name",
+      "minzoom": 10,
+      "filter": ["all", ["==", ["get", "class"], "lake"], ["has", "name"]],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:es"], ["get", "name"]],
+        "text-font": ["Archivo"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 10, 10, 14, 12],
+        "text-letter-spacing": 0.06,
+        "text-max-width": 8
+      },
+      "paint": {
+        "text-color": "#56737e",
+        "text-halo-color": "#0a1317",
+        "text-halo-width": 1.2
+      }
+    },
+    {
+      "id": "aldeas",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "minzoom": 13,
+      "filter": ["match", ["get", "class"], ["hamlet", "isolated_dwelling", "neighbourhood"], true, false],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:es"], ["get", "name"]],
+        "text-font": ["JetBrains Mono"],
+        "text-size": 10,
+        "text-max-width": 8,
+        "text-padding": 3
+      },
+      "paint": {
+        "text-color": "#857867",
+        "text-halo-color": "#0c0a08",
+        "text-halo-width": 1.3
+      }
+    },
+    {
+      "id": "cimas",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "mountain_peak",
+      "minzoom": 8,
+      "filter": [
+        "all",
+        ["match", ["get", "class"], ["peak", "volcano"], true, false],
+        ["has", "name"],
+        ["<=", ["get", "rank"], ["step", ["zoom"], 1, 12, 2, 13, 4, 14, 99]],
+        [">=", ["to-number", ["get", "ele"], 0], ["step", ["zoom"], 1200, 10, 0]]
+      ],
+      "layout": {
+        "icon-image": "cima",
+        "icon-size": ["interpolate", ["linear"], ["zoom"], 9, 0.8, 14, 1.1],
+        "text-field": [
+          "case",
+          ["has", "ele"],
+          [
+            "format",
+            ["coalesce", ["get", "name:es"], ["get", "name"]], {},
+            " · ", { "text-color": "#6f6355" },
+            [
+              "concat",
+              [
+                "case",
+                [">=", ["round", ["to-number", ["get", "ele"]]], 1000],
+                [
+                  "concat",
+                  ["to-string", ["floor", ["/", ["round", ["to-number", ["get", "ele"]]], 1000]]],
+                  ".",
+                  ["slice", ["to-string", ["+", 1000, ["%", ["round", ["to-number", ["get", "ele"]]], 1000]]], 1]
+                ],
+                ["to-string", ["round", ["to-number", ["get", "ele"]]]]
+              ],
+              " m"
+            ],
+            { "text-color": "#d99a32" }
+          ],
+          ["coalesce", ["get", "name:es"], ["get", "name"]]
+        ],
+        "text-font": ["JetBrains Mono"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 9, 9.5, 14, 11],
+        "text-variable-anchor": ["left", "right", "top", "bottom"],
+        "text-radial-offset": 0.7,
+        "text-justify": "auto",
+        "text-max-width": 30,
+        "text-padding": 6,
+        "symbol-sort-key": ["-", 10000, ["to-number", ["get", "ele"], 0]]
+      },
+      "paint": {
+        "text-color": "#d8c6aa",
+        "text-halo-color": "#0c0a08",
+        "text-halo-width": 1.4,
+        "text-halo-blur": 0.5,
+        "icon-opacity": 0.95
+      }
+    },
+    {
+      "id": "pueblos",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "minzoom": 10,
+      "filter": ["match", ["get", "class"], ["village", "suburb"], true, false],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:es"], ["get", "name"]],
+        "text-font": ["JetBrains Mono"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 10, 10, 14, 11.5],
+        "text-max-width": 8,
+        "text-padding": 4,
+        "symbol-sort-key": ["get", "rank"]
+      },
+      "paint": {
+        "text-color": "#a89a88",
+        "text-halo-color": "#0c0a08",
+        "text-halo-width": 1.3,
+        "text-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0.8, 12, 1]
+      }
+    },
+    {
+      "id": "villas",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "minzoom": 8,
+      "maxzoom": 15,
+      "filter": ["==", ["get", "class"], "town"],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:es"], ["get", "name"]],
+        "text-font": ["Archivo"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 8, 10.5, 13, 13],
+        "text-transform": "uppercase",
+        "text-letter-spacing": 0.1,
+        "text-max-width": 9,
+        "symbol-sort-key": ["get", "rank"]
+      },
+      "paint": {
+        "text-color": "#c7b8a3",
+        "text-halo-color": "#0c0a08",
+        "text-halo-width": 1.4
+      }
+    },
+    {
+      "id": "ciudades",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "minzoom": 5,
+      "maxzoom": 14,
+      "filter": ["==", ["get", "class"], "city"],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:es"], ["get", "name"]],
+        "text-font": ["Anton"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 6, 13, 12, 20],
+        "text-transform": "uppercase",
+        "text-letter-spacing": 0.12,
+        "text-max-width": 10,
+        "symbol-sort-key": ["get", "rank"]
+      },
+      "paint": {
+        "text-color": "#e6d9c6",
+        "text-halo-color": "#0c0a08",
+        "text-halo-width": 1.6,
+        "text-opacity": 0.85
+      }
+    }
+  ]
+}

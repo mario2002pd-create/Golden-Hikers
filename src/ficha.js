@@ -7,8 +7,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './estilos.css';
 
 import { num, horaLocal } from '../scripts/lib/formato.mjs';
+import { cargarMaplibre, crearMapa, cuandoVisible, tactil as esTactil, PRIMERA_ETIQUETA } from './mapa/base.js';
 
-const ESTILO = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 const COLOR = { ambar: '#ffb627', naranja: '#ff7a1a', dorado: '#ff5a00' };
 
 const datos = JSON.parse(document.getElementById('datos-ruta').textContent);
@@ -103,47 +103,26 @@ function masCercana(lng, lat) {
 }
 
 async function iniciarMapa() {
-  const [maplibregl, { default: urlWorker }] = await Promise.all([
-    import('maplibre-gl'),
-    import('maplibre-gl/dist/maplibre-gl-worker.mjs?url'),
-  ]);
-  maplibregl.setWorkerUrl(urlWorker);
-  const tactil = window.matchMedia('(pointer: coarse)').matches;
-  mapa = new maplibregl.Map({
+  const maplibregl = await cargarMaplibre();
+  const tactil = esTactil();
+  mapa = crearMapa(maplibregl, {
     container: 'mapa',
-    style: ESTILO,
     bounds: datos.bbox ? [[datos.bbox[0], datos.bbox[1]], [datos.bbox[2], datos.bbox[3]]] : undefined,
     fitBoundsOptions: { padding: window.innerWidth < 640 ? 28 : 56 },
-    attributionControl: { compact: true },
-    dragRotate: false,
-    pitchWithRotate: false,
-    cooperativeGestures: tactil,
-    locale: {
-      'NavigationControl.ZoomIn': 'Acercar',
-      'NavigationControl.ZoomOut': 'Alejar',
-      'AttributionControl.ToggleAttribution': 'Mostrar u ocultar la atribución',
-      'CooperativeGesturesHandler.WindowsHelpText': 'Usa Ctrl + rueda para hacer zoom en el mapa',
-      'CooperativeGesturesHandler.MacHelpText': 'Usa ⌘ + rueda para hacer zoom en el mapa',
-      'CooperativeGesturesHandler.MobileHelpText': 'Usa dos dedos para mover el mapa',
-    },
   });
-  mapa.touchZoomRotate.disableRotation();
-  mapa.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
 
   const el = document.createElement('div');
   el.className = 'marcador-perfil';
   marcador = new maplibregl.Marker({ element: el });
 
   mapa.on('load', () => {
-    for (const capa of mapa.getStyle().layers) {
-      if (capa.type === 'symbol') mapa.setPaintProperty(capa.id, 'text-opacity', 0.55);
-    }
     mapa.addSource('ruta', { type: 'geojson', data: { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: datos.track } } });
     mapa.addSource('dorado', { type: 'geojson', data: { type: 'Feature', properties: {}, geometry: { type: 'MultiLineString', coordinates: datos.dorado ?? [] } } });
-    const linea = (id, source, paint) => mapa.addLayer({ id, type: 'line', source, layout: { 'line-cap': 'round', 'line-join': 'round' }, paint });
-    linea('ruta-halo', 'ruta', { 'line-color': COLOR.naranja, 'line-width': 14, 'line-blur': 10, 'line-opacity': 0.5 });
+    // Los brillos, por debajo de las etiquetas; las líneas, por encima de todo.
+    const linea = (id, source, paint, antes) => mapa.addLayer({ id, type: 'line', source, layout: { 'line-cap': 'round', 'line-join': 'round' }, paint }, antes);
+    linea('ruta-halo', 'ruta', { 'line-color': COLOR.naranja, 'line-width': 14, 'line-blur': 10, 'line-opacity': 0.5 }, PRIMERA_ETIQUETA);
+    linea('dorado-halo', 'dorado', { 'line-color': COLOR.dorado, 'line-width': 20, 'line-blur': 12, 'line-opacity': 0.6 }, PRIMERA_ETIQUETA);
     linea('ruta-linea', 'ruta', { 'line-color': COLOR.ambar, 'line-width': 3.5 });
-    linea('dorado-halo', 'dorado', { 'line-color': COLOR.dorado, 'line-width': 20, 'line-blur': 12, 'line-opacity': 0.6 });
     linea('dorado-linea', 'dorado', { 'line-color': COLOR.dorado, 'line-width': 5 });
     linea('ruta-impacto', 'ruta', { 'line-color': '#000', 'line-width': tactil ? 28 : 18, 'line-opacity': 0.01 });
 
@@ -161,4 +140,4 @@ async function iniciarMapa() {
   });
 }
 
-iniciarMapa();
+cuandoVisible(document.getElementById('mapa'), iniciarMapa);

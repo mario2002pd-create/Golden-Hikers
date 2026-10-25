@@ -6,8 +6,8 @@ import '@fontsource/jetbrains-mono/500.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './estilos.css';
 import { num, fecha, esc } from '../scripts/lib/formato.mjs';
+import { cargarMaplibre, crearMapa, cuandoVisible, tactil as esTactil, PRIMERA_ETIQUETA } from './mapa/base.js';
 
-const ESTILO = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 const BASE = import.meta.env.BASE_URL;
 const ICONO_MAPA =
   '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
@@ -232,46 +232,18 @@ function aplicarFiltroMapa() {
 }
 
 async function iniciarMapa() {
-  // MapLibre pesa: se carga aparte para que la portada salga a la primera.
-  const [lib, { default: urlWorker }] = await Promise.all([
-    import('maplibre-gl'),
-    import('maplibre-gl/dist/maplibre-gl-worker.mjs?url'),
-  ]);
-  maplibregl = lib;
-  maplibregl.setWorkerUrl(urlWorker);
-  const tactil = window.matchMedia('(pointer: coarse)').matches;
-  mapa = new maplibregl.Map({
+  maplibregl = await cargarMaplibre();
+  const tactil = esTactil();
+  const b = limites(rutasVisibles());
+  mapa = crearMapa(maplibregl, {
     container: 'mapa',
-    style: ESTILO,
     center: [-1.65, 42.8],
     zoom: 8,
-    attributionControl: { compact: true },
-    dragRotate: false,
-    pitchWithRotate: false,
-    cooperativeGestures: tactil,
-    locale: {
-      'NavigationControl.ZoomIn': 'Acercar',
-      'NavigationControl.ZoomOut': 'Alejar',
-      'NavigationControl.ResetBearing': 'Orientar al norte',
-      'AttributionControl.ToggleAttribution': 'Mostrar u ocultar la atribución',
-      'AttributionControl.MapFeedback': 'Sugerir mejoras del mapa',
-      'CooperativeGesturesHandler.WindowsHelpText': 'Usa Ctrl + rueda para hacer zoom en el mapa',
-      'CooperativeGesturesHandler.MacHelpText': 'Usa ⌘ + rueda para hacer zoom en el mapa',
-      'CooperativeGesturesHandler.MobileHelpText': 'Usa dos dedos para mover el mapa',
-    },
+    ...(b && { bounds: b, fitBoundsOptions: { padding: relleno(), maxZoom: 14 } }),
   });
-  mapa.touchZoomRotate.disableRotation();
-  mapa.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
   popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 14, maxWidth: '240px', className: 'popup-ruta' });
 
-  const b = limites(estado.rutas);
-  if (b) mapa.fitBounds(b, { padding: relleno(), maxZoom: 14, duration: 0 });
-
   mapa.on('load', () => {
-    // Etiquetas del mapa base más apagadas: el protagonismo es de los tracks.
-    for (const capa of mapa.getStyle().layers) {
-      if (capa.type === 'symbol') mapa.setPaintProperty(capa.id, 'text-opacity', 0.55);
-    }
     mapa.addSource('rutas', { type: 'geojson', data: lineasRutas(estado.rutas) });
     mapa.addSource('dorado', { type: 'geojson', data: tramosDorados(estado.rutas) });
 
@@ -286,7 +258,7 @@ async function iniciarMapa() {
         'line-blur': ['interpolate', ['linear'], ['zoom'], 8, 5, 14, 12],
         'line-opacity': 0.5,
       },
-    });
+    }, PRIMERA_ETIQUETA);
     mapa.addLayer({
       id: 'rutas-linea',
       type: 'line',
@@ -310,7 +282,7 @@ async function iniciarMapa() {
         'line-blur': ['interpolate', ['linear'], ['zoom'], 8, 6, 14, 14],
         'line-opacity': 0.6,
       },
-    });
+    }, PRIMERA_ETIQUETA);
     mapa.addLayer({
       id: 'dorado-linea',
       type: 'line',
@@ -346,13 +318,14 @@ async function iniciarMapa() {
       paint: { 'line-color': '#000', 'line-width': tactil ? 28 : 16, 'line-opacity': 0.01 },
     });
 
+    // Los brillos van por debajo de las etiquetas (que se siguen leyendo) y las líneas, por encima.
     // Los tramos dorados, por encima del resalte: así se ve en qué parte de la ruta se puso el sol.
-    mapa.moveLayer('dorado-halo', 'rutas-impacto');
     mapa.moveLayer('dorado-linea', 'rutas-impacto');
 
     mapaListo = true;
     aplicarFiltroMapa();
-    resaltar(estado.seleccionada);
+    // Si se pulsó una diana antes de que el mapa estuviera listo, se lleva ahora.
+    if (estado.seleccionada != null) seleccionar(estado.seleccionada, { encuadrar: true });
 
     let encima = null;
     mapa.on('mousemove', 'rutas-impacto', (e) => {
@@ -465,7 +438,8 @@ async function arrancar() {
   pintarFiltroAnio();
   pintarLista();
   enlazar();
-  iniciarMapa();
+  // El mapa (MapLibre, teselas y relieve) solo se carga cuando se va a ver.
+  cuandoVisible(document.getElementById('mapa'), iniciarMapa);
 }
 
 arrancar();

@@ -65,6 +65,29 @@ Para parecerse a Strava, los parámetros se han calibrado con las 3 rutas de pru
 - **Distancia:** se quitan los saltos del GPS (más de 4 m/s respecto al último punto bueno), se suaviza la posición con una media de 5 puntos y no se cuentan los movimientos de menos de 1 m (el temblor del GPS cuando estamos parados).
 - **Desnivel:** la altitud se remuestrea cada 10 m recorridos y se suman las subidas con una histéresis de 1,5 m, sin media móvil.
 
+## El mapa
+
+La portada y las fichas usan el mismo mapa base (`src/mapa/`): un estilo oscuro propio, `src/mapa/estilo.json`, con la paleta de la web. Está en el repo para no depender de un estilo de fuera que pueda cambiar. Nada de lo que se usa necesita clave de API.
+
+- **Base vectorial:** las teselas [OpenMapTiles](https://openmaptiles.org/) de [OpenFreeMap](https://openfreemap.org/) (`https://tiles.openfreemap.org/planet`), que son gratuitas, sin registro y sin límite de visitas. Sobre ellas: bosques, agua, ríos y embalses en tonos muy oscuros; carreteras atenuadas; pistas (desde zoom 12) y senderos (desde zoom 13) con trazo fino y punteado; pueblos desde zoom 10 y aldeas desde zoom 13.
+- **Cimas:** nombre y altitud («Higa de Monreal · 1.289 m») con un triángulo ámbar. Las más importantes salen antes: en la vista general solo las de más de 1.200 m, y según se acerca el zoom van apareciendo las demás (usa el `rank` de OpenMapTiles y la altitud).
+- **Nombres en castellano:** se usa `name:es` cuando existe y, si no, el nombre de OpenStreetMap.
+- **Tipografía:** el estilo no tiene `glyphs`, así que MapLibre dibuja las etiquetas con las fuentes que ya carga la web: JetBrains Mono (pueblos y cimas), Archivo (villas, ríos y embalses) y Anton (ciudades).
+- **Relieve:** sombreado (hillshade) con las teselas de [Mapterhorn](https://mapterhorn.com/) (`https://tiles.mapterhorn.com/{z}/{x}/{y}.webp`, formato terrarium). En España salen del MDT02/MDT05 del CNIG (CC BY 4.0). Las sombras y las luces son cálidas y muy suaves, para que se vean las sierras sin restar protagonismo a los tracks.
+- **Curvas de nivel:** con [maplibre-contour](https://github.com/onthegomap/maplibre-contour), sobre el mismo DEM, solo desde zoom 13, con una cota cada 100 m. Con «ahorro de datos» activado en el móvil no se cargan.
+- **Orden de capas:** el brillo de los tracks va por debajo de las etiquetas, para que se sigan leyendo, y las líneas de los tracks, los tramos de hora dorada y el resaltado van por encima de todo, para que ninguna etiqueta las tape.
+
+**Peso en el móvil.** El mapa (MapLibre, teselas y relieve) no se carga hasta que se va a ver: al abrir la portada se piden unos 0,4 MB, frente a 1,06 MB con el mapa anterior. El relieve se pide cuando el mapa base ya se ha pintado, y las curvas solo cuando hay zoom de 13 o más (unos 230 KB más del DEM). Con la portada y el mapa ya vistos se cargan unos 1,3 MB en total; antes, 1,06 MB.
+
+Para usar otro DEM basta con cambiar `DEM` en `src/mapa/base.js`. Por ejemplo, [AWS Terrain Tiles](https://registry.opendata.aws/terrain-tiles/), con `https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png`, `tileSize: 256` y su propia atribución. Sus PNG pesan unas 3 veces más que el WebP de Mapterhorn para la misma superficie, y en España tienen menos resolución.
+
+### Atribuciones
+
+El control del mapa las muestra en castellano (en el móvil, plegadas detrás del botón «i» cuando se mueve el mapa):
+
+- Mapa base: © [OpenMapTiles](https://www.openmaptiles.org/), datos © [OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL), servido por [OpenFreeMap](https://openfreemap.org/).
+- Relieve y curvas: [Mapterhorn](https://mapterhorn.com/attribution/), con el MDT © [CNIG](https://www.scne.es/) (CC BY 4.0).
+
 ## Fichas de ruta
 
 Cada ruta tiene su página, generada en el build: `ruta/NN-nombre/` (el número es el orden cronológico y el nombre sale del nombre del GPX, sin la fecha). Lleva el mapa del track, el perfil de altitud interactivo (sincronizado con el mapa), los kilómetros, el desnivel, la cota máxima, la hora de inicio, la relación con la puesta de sol y su propia imagen para compartir (`og/ruta-NN.jpg`).

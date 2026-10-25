@@ -124,7 +124,7 @@
       "id": "cima-torre-atardecer",
       "fecha": null,
       "ruta": null,
-      "papel": "galeria",
+      "papel": "corte",
       "orientacion": "horizontal",
       "alt": "Tres senderistas descansan en la cima junto a una torre de piedra mientras el cielo se vuelve naranja",
       "grande": {
@@ -138,6 +138,786 @@
         "ancho": 900,
         "alto": 506,
         "kb": 36
+      }
+    },
+    {
+      "id": "2025-08-06_eltxumendi-01",
+      "fecha": "2025-08-06",
+      "ruta": "Eltxumendi",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Foto de grupo en la cima de Eltxumendi con el sol poniéndose detrás",
+      "grande": {
+        "archivo": "2025-08-06_eltxumendi-01-l.webp",
+        "ancho": 1350,
+        "alto": 1800,
+        "kb": 378
+      },
+      "pequena": {
+        "archivo": "2025-08-06_eltxumendi-01-s.webp",
+        "ancho": 675,
+        "alto": 900,
+        "kb": 121
+      }
+    },
+    {
+      "id": "2025-08-06_eltxumendi-02",
+      "fecha": "2025-08-06",
+      "ruta": "Eltxumendi",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Subiendo por una ladera de hierba seca hacia la cima",
+      "grande": {
+        "archivo": "2025-08-06_eltxumendi-02-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 398
+      },
+      "pequena": {
+        "archivo": "2025-08-06_eltxumendi-02-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 133
+      }
+    },
+    {
+      "id": "2025-08-06_eltxumendi-03",
+      "fecha": "2025-08-06",
+      "ruta": "Eltxumendi",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "El sol se pone sobre las sierras vistas desde Eltxumendi",
+      "grande": {
+        "archivo": "2025-08-06_eltxumendi-03-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 28
+      },
+      "pequena": {
+        "archivo": "2025-08-06_eltxumendi-03-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 9
+      }
+    },
+    {
+      "id": "2025-08-06_eltxumendi-04",
+      "fecha": "2025-08-06",
+      "ruta": "Eltxumendi",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Descanso en la cima junto al vértice geodésico al atardecer",
+      "grande": {
+        "archivo": "2025-08-06_eltxumendi-04-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 116
+      },
+      "pequena": {
+        "archivo": "2025-08-06_eltxumendi-04-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 36
+      }
+    },
+    {
+      "id": "2025-08-06_eltxumendi-05",
+      "fecha": "2025-08-06",
+      "ruta": "Eltxumendi",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Bajando por la ladera con la cuenca de Pamplona al fondo",
+      "grande": {
+        "archivo": "2025-08-06_eltxumendi-05-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 184
+      },
+      "pequena": {
+        "archivo": "2025-08-06_eltxumendi-05-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 46
+      }
+    },
+    {
+      "id": "2025-09-05_desde-labiano-01",
+      "fecha": "2025-09-05",
+      "ruta": "Desde Labiano",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Sol bajo y naranja sobre los montes",
+      "grande": {
+        "archivo": "2025-09-05_desde-labiano-01-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 31
+      },
+      "pequena": {
+        "archivo": "2025-09-05_desde-labiano-01-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 10
+      }
+    },
+    {
+      "id": "2025-09-05_desde-labiano-02",
+      "fecha": "2025-09-05",
+      "ruta": "Desde Labiano",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Monte con antena iluminado por la luz de la tarde",
+      "grande": {
+        "archivo": "2025-09-05_desde-labiano-02-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 103
+      },
+      "pequena": {
+        "archivo": "2025-09-05_desde-labiano-02-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 28
+      }
+    },
+    {
+      "id": "2025-09-05_desde-labiano-03",
+      "fecha": "2025-09-05",
+      "ruta": "Desde Labiano",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Cielo rosado del atardecer sobre las sierras",
+      "grande": {
+        "archivo": "2025-09-05_desde-labiano-03-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 45
+      },
+      "pequena": {
+        "archivo": "2025-09-05_desde-labiano-03-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 13
+      }
+    },
+    {
+      "id": "2025-09-14_egulbati-01",
+      "fecha": "2025-09-14",
+      "ruta": "Egulbati",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "El grupo posa con un monte y campos dorados detrás",
+      "grande": {
+        "archivo": "2025-09-14_egulbati-01-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 190
+      },
+      "pequena": {
+        "archivo": "2025-09-14_egulbati-01-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 65
+      }
+    },
+    {
+      "id": "2025-09-14_egulbati-02",
+      "fecha": "2025-09-14",
+      "ruta": "Egulbati",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Foto de grupo en el camino, a contraluz del sol poniente",
+      "grande": {
+        "archivo": "2025-09-14_egulbati-02-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 231
+      },
+      "pequena": {
+        "archivo": "2025-09-14_egulbati-02-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 60
+      }
+    },
+    {
+      "id": "2025-09-14_egulbati-03",
+      "fecha": "2025-09-14",
+      "ruta": "Egulbati",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "El sol se hunde tras la sierra",
+      "grande": {
+        "archivo": "2025-09-14_egulbati-03-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 24
+      },
+      "pequena": {
+        "archivo": "2025-09-14_egulbati-03-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 9
+      }
+    },
+    {
+      "id": "2025-09-14_egulbati-04",
+      "fecha": "2025-09-14",
+      "ruta": "Egulbati",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Cuatro senderistas posan al atardecer",
+      "grande": {
+        "archivo": "2025-09-14_egulbati-04-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 151
+      },
+      "pequena": {
+        "archivo": "2025-09-14_egulbati-04-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 45
+      }
+    },
+    {
+      "id": "2025-09-14_egulbati-05",
+      "fecha": "2025-09-14",
+      "ruta": "Egulbati",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Últimos tonos naranjas sobre las sierras al anochecer",
+      "grande": {
+        "archivo": "2025-09-14_egulbati-05-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 92
+      },
+      "pequena": {
+        "archivo": "2025-09-14_egulbati-05-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 22
+      }
+    },
+    {
+      "id": "2025-09-19_zolina-01",
+      "fecha": "2025-09-19",
+      "ruta": "Zolina",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "El grupo en un alto con Pamplona y un monte al fondo",
+      "grande": {
+        "archivo": "2025-09-19_zolina-01-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 119
+      },
+      "pequena": {
+        "archivo": "2025-09-19_zolina-01-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 39
+      }
+    },
+    {
+      "id": "2025-09-19_zolina-02",
+      "fecha": "2025-09-19",
+      "ruta": "Zolina",
+      "papel": "ruta",
+      "orientacion": "horizontal",
+      "alt": "Cinco amigos sentados de espaldas en un banco mirando el valle",
+      "grande": {
+        "archivo": "2025-09-19_zolina-02-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 205
+      },
+      "pequena": {
+        "archivo": "2025-09-19_zolina-02-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 61
+      }
+    },
+    {
+      "id": "2025-09-25_ardanaz-ruta-de-jueves-01",
+      "fecha": "2025-09-25",
+      "ruta": "Ardanaz, ruta de jueves",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Montaña con antena al atardecer, vista entre pinos",
+      "grande": {
+        "archivo": "2025-09-25_ardanaz-ruta-de-jueves-01-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 108
+      },
+      "pequena": {
+        "archivo": "2025-09-25_ardanaz-ruta-de-jueves-01-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 33
+      }
+    },
+    {
+      "id": "2025-09-25_ardanaz-ruta-de-jueves-02",
+      "fecha": "2025-09-25",
+      "ruta": "Ardanaz, ruta de jueves",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "El grupo en lo alto con el sol poniéndose entre nubes",
+      "grande": {
+        "archivo": "2025-09-25_ardanaz-ruta-de-jueves-02-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 225
+      },
+      "pequena": {
+        "archivo": "2025-09-25_ardanaz-ruta-de-jueves-02-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 61
+      }
+    },
+    {
+      "id": "2025-09-25_ardanaz-ruta-de-jueves-03",
+      "fecha": "2025-09-25",
+      "ruta": "Ardanaz, ruta de jueves",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "El grupo posa bajo nubes grises con una franja de sol naranja",
+      "grande": {
+        "archivo": "2025-09-25_ardanaz-ruta-de-jueves-03-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 207
+      },
+      "pequena": {
+        "archivo": "2025-09-25_ardanaz-ruta-de-jueves-03-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 61
+      }
+    },
+    {
+      "id": "2025-09-25_ardanaz-ruta-de-jueves-04",
+      "fecha": "2025-09-25",
+      "ruta": "Ardanaz, ruta de jueves",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Nubes encendidas de rojo sobre Pamplona al atardecer",
+      "grande": {
+        "archivo": "2025-09-25_ardanaz-ruta-de-jueves-04-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 48
+      },
+      "pequena": {
+        "archivo": "2025-09-25_ardanaz-ruta-de-jueves-04-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 18
+      }
+    },
+    {
+      "id": "2025-10-04_lantz-01",
+      "fecha": "2025-10-04",
+      "ruta": "Lantz",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Casa de pueblo con un monte puntiagudo detrás",
+      "grande": {
+        "archivo": "2025-10-04_lantz-01-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 108
+      },
+      "pequena": {
+        "archivo": "2025-10-04_lantz-01-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 39
+      }
+    },
+    {
+      "id": "2025-10-04_lantz-02",
+      "fecha": "2025-10-04",
+      "ruta": "Lantz",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Calle del pueblo con los montes al fondo y el cielo azul",
+      "grande": {
+        "archivo": "2025-10-04_lantz-02-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 227
+      },
+      "pequena": {
+        "archivo": "2025-10-04_lantz-02-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 57
+      }
+    },
+    {
+      "id": "2025-10-04_lantz-03",
+      "fecha": "2025-10-04",
+      "ruta": "Lantz",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Hayedo verde en una ladera",
+      "grande": {
+        "archivo": "2025-10-04_lantz-03-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 629
+      },
+      "pequena": {
+        "archivo": "2025-10-04_lantz-03-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 174
+      }
+    },
+    {
+      "id": "2025-11-09_pena-unzue-al-atardecer-01",
+      "fecha": "2025-11-09",
+      "ruta": "Peña Unzue al atardecer",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Un senderista abraza un roble centenario",
+      "grande": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-01-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 595
+      },
+      "pequena": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-01-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 166
+      }
+    },
+    {
+      "id": "2025-11-09_pena-unzue-al-atardecer-02",
+      "fecha": "2025-11-09",
+      "ruta": "Peña Unzue al atardecer",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Una peña asoma entre ramas de otoño",
+      "grande": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-02-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 375
+      },
+      "pequena": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-02-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 114
+      }
+    },
+    {
+      "id": "2025-11-09_pena-unzue-al-atardecer-03",
+      "fecha": "2025-11-09",
+      "ruta": "Peña Unzue al atardecer",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Molinos de viento recortados contra el cielo de la tarde",
+      "grande": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-03-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 50
+      },
+      "pequena": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-03-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 15
+      }
+    },
+    {
+      "id": "2025-11-09_pena-unzue-al-atardecer-04",
+      "fecha": "2025-11-09",
+      "ruta": "Peña Unzue al atardecer",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "El sol sobre un cerro puntiagudo al final de una pista",
+      "grande": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-04-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 104
+      },
+      "pequena": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-04-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 30
+      }
+    },
+    {
+      "id": "2025-11-09_pena-unzue-al-atardecer-05",
+      "fecha": "2025-11-09",
+      "ruta": "Peña Unzue al atardecer",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Atardecer naranja sobre la llanura, con molinos a lo lejos",
+      "grande": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-05-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 62
+      },
+      "pequena": {
+        "archivo": "2025-11-09_pena-unzue-al-atardecer-05-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 21
+      }
+    },
+    {
+      "id": "2025-12-14_atardecer-en-el-perdon-01",
+      "fecha": "2025-12-14",
+      "ruta": "Atardecer en el Perdón",
+      "papel": "ruta",
+      "orientacion": "horizontal",
+      "alt": "El grupo a contraluz con el sol entre nubes naranjas",
+      "grande": {
+        "archivo": "2025-12-14_atardecer-en-el-perdon-01-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 57
+      },
+      "pequena": {
+        "archivo": "2025-12-14_atardecer-en-el-perdon-01-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 21
+      }
+    },
+    {
+      "id": "2025-12-14_atardecer-en-el-perdon-02",
+      "fecha": "2025-12-14",
+      "ruta": "Atardecer en el Perdón",
+      "papel": "ruta",
+      "orientacion": "horizontal",
+      "alt": "Foto de grupo en la cima del Perdón al atardecer",
+      "grande": {
+        "archivo": "2025-12-14_atardecer-en-el-perdon-02-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 210
+      },
+      "pequena": {
+        "archivo": "2025-12-14_atardecer-en-el-perdon-02-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 48
+      }
+    },
+    {
+      "id": "2025-12-14_atardecer-en-el-perdon-03",
+      "fecha": "2025-12-14",
+      "ruta": "Atardecer en el Perdón",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Sol naranja entre nubes y un rayo de luz sobre los pinos",
+      "grande": {
+        "archivo": "2025-12-14_atardecer-en-el-perdon-03-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 67
+      },
+      "pequena": {
+        "archivo": "2025-12-14_atardecer-en-el-perdon-03-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 23
+      }
+    },
+    {
+      "id": "2025-12-14_atardecer-en-el-perdon-04",
+      "fecha": "2025-12-14",
+      "ruta": "Atardecer en el Perdón",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Las luces de Pamplona de noche entre los árboles",
+      "grande": {
+        "archivo": "2025-12-14_atardecer-en-el-perdon-04-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 251
+      },
+      "pequena": {
+        "archivo": "2025-12-14_atardecer-en-el-perdon-04-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 35
+      }
+    },
+    {
+      "id": "2026-01-03_montejurra-01",
+      "fecha": "2026-01-03",
+      "ruta": "Montejurra",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Montejurra entre nubes, visto desde el pueblo",
+      "grande": {
+        "archivo": "2026-01-03_montejurra-01-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 148
+      },
+      "pequena": {
+        "archivo": "2026-01-03_montejurra-01-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 41
+      }
+    },
+    {
+      "id": "2026-01-03_montejurra-02",
+      "fecha": "2026-01-03",
+      "ruta": "Montejurra",
+      "papel": "ruta",
+      "orientacion": "horizontal",
+      "alt": "Mucha gente reunida junto a la ermita de la cima, con niebla",
+      "grande": {
+        "archivo": "2026-01-03_montejurra-02-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 201
+      },
+      "pequena": {
+        "archivo": "2026-01-03_montejurra-02-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 57
+      }
+    },
+    {
+      "id": "2026-01-03_montejurra-03",
+      "fecha": "2026-01-03",
+      "ruta": "Montejurra",
+      "papel": "ruta",
+      "orientacion": "horizontal",
+      "alt": "El grupo en la cima con un mar de nubes detrás",
+      "grande": {
+        "archivo": "2026-01-03_montejurra-03-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 177
+      },
+      "pequena": {
+        "archivo": "2026-01-03_montejurra-03-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 50
+      }
+    },
+    {
+      "id": "2026-01-03_montejurra-04",
+      "fecha": "2026-01-03",
+      "ruta": "Montejurra",
+      "papel": "ruta",
+      "orientacion": "horizontal",
+      "alt": "Mar de nubes sobre la llanura",
+      "grande": {
+        "archivo": "2026-01-03_montejurra-04-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 37
+      },
+      "pequena": {
+        "archivo": "2026-01-03_montejurra-04-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 14
+      }
+    },
+    {
+      "id": "2026-01-06_higa-de-monreal-01",
+      "fecha": "2026-01-06",
+      "ruta": "Higa de Monreal",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "Dos senderistas suben con bastones por la ladera",
+      "grande": {
+        "archivo": "2026-01-06_higa-de-monreal-01-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 264
+      },
+      "pequena": {
+        "archivo": "2026-01-06_higa-de-monreal-01-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 77
+      }
+    },
+    {
+      "id": "2026-01-06_higa-de-monreal-02",
+      "fecha": "2026-01-06",
+      "ruta": "Higa de Monreal",
+      "papel": "ruta",
+      "orientacion": "vertical",
+      "alt": "El grupo camina por la nieve hacia la cima helada de la Higa de Monreal",
+      "grande": {
+        "archivo": "2026-01-06_higa-de-monreal-02-l.webp",
+        "ancho": 1012,
+        "alto": 1800,
+        "kb": 337
+      },
+      "pequena": {
+        "archivo": "2026-01-06_higa-de-monreal-02-s.webp",
+        "ancho": 506,
+        "alto": 900,
+        "kb": 87
+      }
+    },
+    {
+      "id": "2026-01-06_higa-de-monreal-03",
+      "fecha": "2026-01-06",
+      "ruta": "Higa de Monreal",
+      "papel": "ruta",
+      "orientacion": "horizontal",
+      "alt": "Monte nevado iluminado por el sol de la tarde",
+      "grande": {
+        "archivo": "2026-01-06_higa-de-monreal-03-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 207
+      },
+      "pequena": {
+        "archivo": "2026-01-06_higa-de-monreal-03-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 59
+      }
+    },
+    {
+      "id": "2026-01-06_higa-de-monreal-04",
+      "fecha": "2026-01-06",
+      "ruta": "Higa de Monreal",
+      "papel": "ruta",
+      "orientacion": "horizontal",
+      "alt": "Selfi del grupo en la cima nevada con el atardecer detrás",
+      "grande": {
+        "archivo": "2026-01-06_higa-de-monreal-04-l.webp",
+        "ancho": 1800,
+        "alto": 1013,
+        "kb": 111
+      },
+      "pequena": {
+        "archivo": "2026-01-06_higa-de-monreal-04-s.webp",
+        "ancho": 900,
+        "alto": 506,
+        "kb": 44
       }
     }
   ]
